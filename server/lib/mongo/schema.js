@@ -2,6 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
+//create schema
 const playerSchema = new Schema({
     p_id:Number, // id
     created_date:Date, // data created
@@ -16,9 +17,9 @@ const teamSchema = new Schema({
     players:[String], // array of names
     created_date:Date, // data created
 })
+//___________________________________________________________________
 
-
-
+// create model
 const Player = model("Player", playerSchema);
 const Team = model("Team", teamSchema);
 
