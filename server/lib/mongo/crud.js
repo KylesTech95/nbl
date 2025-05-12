@@ -1,7 +1,7 @@
 const { model } = require('mongoose');
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
 const path = require('path');
-const {Team,Player,One,Car} = require('./schema.js')
+const {Team,Player} = require('./schema.js')
 
 
 // create
@@ -56,13 +56,12 @@ const createModel = async (path,schema_name) => {
         exportModule(path,schema) // update module exports
         
 }
-
 // create instance of a model (Player)
-const createInstance = async (model,payload) => {
-    const instance = new model(payload) // plug object key/values into model and store in instance variable
-    // await instance.save();
-    console.log(instance)
+const createInstance = (Model,payload={}) => {
+    let instance = new Model(payload) // plug object key/values into model and store in instance variable
+    return instance;
 }
+
 
 // read
 //___________________________________________________________________
@@ -74,6 +73,17 @@ const createInstance = async (model,payload) => {
 
 // update
 //___________________________________________________________________
+const updateInstance = async (Model,filter={},update={},options={}) => {
+    let response = await Model.updateOne(filter,update,options);
+    if(!response)console.error('UPDATE - something went wrong')
+    process.nextTick(()=>process.exit(0))
+}
+
+async function updateMany(Model,filter={},update={},options={}) {
+    let response = await Model.updateMany(filter,update,options);
+    if(!response)console.error('UPDATE - something went wrong')
+    process.nextTick(()=>process.exit(0))
+}
 // save data
 const saveData = async (data) => {
     await data.save();
@@ -108,6 +118,10 @@ const writeLineToFile = async(path,line,output,options={})=> {
     let diff = Math.abs(modFile.split`\n`.length - lines.length);
     console.log("Difference in Length:\n"+diff)
 }
+
+
+
+
 // update module exports
 const exportModule = (path,schema) => {
     if(!path || !schema) {
@@ -124,7 +138,6 @@ const exportModule = (path,schema) => {
 }
 
 
-
 // test create schema
 // createSchema('Car',{brand:'String',model:"String",year:"Number", milage:'Number'}) // test
 
@@ -137,4 +150,4 @@ const exportModule = (path,schema) => {
 //     total:3
 // })
 
-module.exports = {saveData}
+module.exports = {saveData, createInstance, updateInstance, updateMany}

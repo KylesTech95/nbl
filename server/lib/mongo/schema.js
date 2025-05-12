@@ -14,7 +14,10 @@ const statsSchema = new Schema({
     p_id:Number,
     wins:Number, // wins
     losses:Number, // losses
-    total:Number,
+    total_games:Number,
+    points:Number,
+    assists:Number,
+    
 })
 // team schema
 const teamSchema = new Schema({
