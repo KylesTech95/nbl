@@ -8,6 +8,10 @@ const playerSchema = new Schema({
     p_id:Number, // id
     created_date:Date, // data created
     player_name:String, // player name 
+})
+// stats
+const statsSchema = new Schema({
+    p_id:Number,
     wins:Number, // wins
     losses:Number, // losses
     total:Number,
@@ -19,30 +23,12 @@ const teamSchema = new Schema({
     created_date:Date, // data created
 })
 
-
-// oneSchema
-// Create on 2025-05-12T14:43:57.774Z
-const oneSchema = new Schema({
-one:String,
-two:Number,
-three:[Date]
-})
-
-// CarSchema
-// Create on 2025-05-12T14:45:39.892Z
-const CarSchema = new Schema({
-brand:String,
-model:String,
-year:Number,
-milage:Number
-})
 //_____________________________________schema_end
 
 // create model
 const Player = model("Player", playerSchema);
+const Stats = model("Stat", statsSchema)
 const Team = model("Team", teamSchema);
-const One = model("One", oneSchema);
-const Car = model("Car", CarSchema);
 
-module.exports = { Team, Player , One , Car }
+module.exports = { Team, Stats , Player }
 

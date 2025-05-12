@@ -75,7 +75,10 @@ const createInstance = async (model,payload) => {
 // update
 //___________________________________________________________________
 // save data
-
+const saveData = async (data) => {
+    await data.save();
+    process.nextTick(()=>process.exit(0))
+}
 
 
 
@@ -134,11 +137,4 @@ const exportModule = (path,schema) => {
 //     total:3
 // })
 
-// createInstance(Car,
-// {
-// brand:'Mazda',
-// model:'Qx3',
-// year:2025,
-// milage:1000,
-// })
-
+module.exports = {saveData}
