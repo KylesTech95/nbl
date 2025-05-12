@@ -1,4 +1,6 @@
+const { model } = require('mongoose');
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
+
 const path = require('path');
 
 
@@ -21,6 +23,7 @@ const createSchema = async (schema_name='',object={}) => {
     let schema = 'Schema'; // declare the schema's name
         schema_name = schema_name.replace(/_?schema/gi,'') // if schema is alreay included in the name, replace it
         schema_name+=schema //default schema var to the end of string
+
     
     let comment = `\n// ${schema_name}\n// Create on ${new Date().toISOString()}`
     let message = `const ${schema_name} = new Schema(${JSON.stringify(object)
@@ -28,10 +31,8 @@ const createSchema = async (schema_name='',object={}) => {
         .replace(/(\{)/,'$1\n')
         .replace(/(\})/,'\n$1')
         .replace(/(\,)/g,'$1\n')})` // construct message to write to file
-        // writeFileSync(path.resolve(__dirname,'schema.js'), message, 'utf-8'); // write to schema.js
 
         message = `${comment}\n${message}` // combine comment and message
-        // appendFileSync(path.resolve(__dirname,'schema.js'), message, 'utf-8'); // write to schema.js
 
         // overwrite new file
         let file = readFileSync(path.resolve(__dirname,'schema.js'),'utf-8')
@@ -39,32 +40,28 @@ const createSchema = async (schema_name='',object={}) => {
         let ending = lines.indexOf(...lines.filter(ln => /^\/\/_____*schema_end/i.test(ln)));// get the index from file
         writeLineToFile(path.resolve(__dirname,'schema.js'), ending, message)
         
-        setTimeout(()=>{
             // now create the model with the new schema
             createModel(path.resolve(__dirname,'schema.js'),schema_name)
-        },100)
-
 }
 // create model
 const createModel = async (path,schema_name) => {
-    console.log(schema_name)
-let schema = [schema_name[0].toUpperCase(),schema_name.replace(/Schema$/gi,'').slice(1)].join``;
-console.log(schema)
-let file = readFileSync(path,'utf-8')
-        let lines = file.split`\n`
-        let ending = lines.lastIndexOf(...lines.filter(ln => /Schema\)\;?$/i.test(ln)));// get the index from file
+        let file = readFileSync(path,'utf-8'); // read the file
+        let schema = [schema_name[0].toUpperCase(),schema_name.replace(/Schema$/gi,'').slice(1)].join``;
+        let lines = file.split`\n` // array of lines
+        let fil = lines.filter(ln => /Schema\)\;?/g.test(ln))
+        let filres = fil[fil.length-1]
+        let ending = lines.indexOf(filres);// get the index from file
         let output = `const ${schema} = model("${schema}", ${schema_name});` // output message for model
-        writeLineToFile(path, ending, output, {type:'model'}); // update file
+        writeLineToFile(path, ending+1, output); // update file
+        exportModule(path,schema) // update module exports
         
-        // exportModule(path,schema) // update module exports
 }
 
-
-
-
-
-
-
+// create instance of a model (Player)
+const createInstance = async (model,payload) => {
+    const instance = new model(payload) // plug object key/values into model and store in instance variable
+    console.log(instance)
+}
 
 // read
 //___________________________________________________________________
@@ -77,8 +74,9 @@ let file = readFileSync(path,'utf-8')
 // update
 //___________________________________________________________________
 // save data
-const saveData = async (instance) => await instance.save();
-
+async function saveData(instance){
+    await instance.save();
+}
 
 
 
@@ -92,32 +90,39 @@ const saveData = async (instance) => await instance.save();
 
 
 
+
+
 // update file on line
 const writeLineToFile = async(path,line,output,options={})=> {
     let file = readFileSync(path,'utf-8'),lines = file.split`\n`, ending = lines[line];
-
     // splice
-    lines.splice(line,1,`${output}\n${ending||''}`) // splice the current array
+    lines.splice(line,1,`${output}\n${options.type=='module' ? '' : ending||''}`) // splice the current array
     const modFile = lines.join`\n`; // bring the file together
     writeFileSync(path,modFile,'utf-8') // write modified file to same file
 }
 // update module exports
 const exportModule = (path,schema) => {
     if(!path || !schema) {
-        console.log('check parameters')
         return false;
     }
     let file = readFileSync(path,'utf-8');
     let lines = file.split`\n`;
-    let ending = lines.indexOf(...lines.filter(ln => /module\.exports/i.test(ln)));// get the index from file
-    lines[ending] = lines[ending].replace(/(\})/g,`,${schema}$1`);
-    // console.log(lines[ending])
+    let ending = lines.indexOf(lines.filter(ln => /module\.exports/gi.test(ln))[0]);// get the index from file
+    lines[ending] = lines[ending].replace(/(\})/g,`, ${schema} $1`);
+
+    writeLineToFile(path,ending,lines[ending],{type:'module'}) // update module.exports
 }
 
 
 
-
-
 // test create schema
-createSchema('one',{one:'String',two:'Number', three:'[Date]'}) // test
-createSchema('two',{one:'String',two:'Number', three:'[Date]'}) // test
+// createSchema('five',{one:'String',two:'Number', three:'[Date]'}) // test
+
+// createInstance(require('./schema.js')['Player'],{
+//     p_id:33,
+//     created_date:new Date().toISOString(),
+//     player_name:'sharry',
+//     wins:3,
+//     losses:5,
+//     total:3
+// })

@@ -19,27 +19,10 @@ const teamSchema = new Schema({
     created_date:Date, // data created
 })
 
-
-// oneSchema
-// Create on 2025-05-11T20:49:31.065Z
-const oneSchema = new Schema({
-one:String,
-two:Number,
-three:[Date]
-})
-
-// twoSchema
-// Create on 2025-05-11T20:49:31.069Z
-const twoSchema = new Schema({
-one:String,
-two:Number,
-three:[Date]
-})
 //_____________________________________schema_end
 
 // create model
 const Player = model("Player", playerSchema);
 const Team = model("Team", teamSchema);
 
-const Two = model("Two", twoSchema);
-const One = model("One", oneSchema);
+module.exports = { Team, Player }
