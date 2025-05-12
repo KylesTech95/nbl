@@ -1,7 +1,7 @@
 const { model } = require('mongoose');
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
-
 const path = require('path');
+const {Team,Player,One,Car} = require('./schema.js')
 
 
 // create
@@ -60,6 +60,7 @@ const createModel = async (path,schema_name) => {
 // create instance of a model (Player)
 const createInstance = async (model,payload) => {
     const instance = new model(payload) // plug object key/values into model and store in instance variable
+    // await instance.save();
     console.log(instance)
 }
 
@@ -74,9 +75,7 @@ const createInstance = async (model,payload) => {
 // update
 //___________________________________________________________________
 // save data
-async function saveData(instance){
-    await instance.save();
-}
+
 
 
 
@@ -95,10 +94,16 @@ async function saveData(instance){
 // update file on line
 const writeLineToFile = async(path,line,output,options={})=> {
     let file = readFileSync(path,'utf-8'),lines = file.split`\n`, ending = lines[line];
+    console.log("before: "+lines.length)
+    
     // splice
     lines.splice(line,1,`${output}\n${options.type=='module' ? '' : ending||''}`) // splice the current array
-    const modFile = lines.join`\n`; // bring the file together
+    let modFile = lines.join`\n`; // bring the file together
     writeFileSync(path,modFile,'utf-8') // write modified file to same file
+    console.log("after: "+modFile.split`\n`.length)
+
+    let diff = Math.abs(modFile.split`\n`.length - lines.length);
+    console.log("Difference in Length:\n"+diff)
 }
 // update module exports
 const exportModule = (path,schema) => {
@@ -107,6 +112,8 @@ const exportModule = (path,schema) => {
     }
     let file = readFileSync(path,'utf-8');
     let lines = file.split`\n`;
+    let copy = [...lines];
+    
     let ending = lines.indexOf(lines.filter(ln => /module\.exports/gi.test(ln))[0]);// get the index from file
     lines[ending] = lines[ending].replace(/(\})/g,`, ${schema} $1`);
 
@@ -116,9 +123,9 @@ const exportModule = (path,schema) => {
 
 
 // test create schema
-// createSchema('five',{one:'String',two:'Number', three:'[Date]'}) // test
+// createSchema('Car',{brand:'String',model:"String",year:"Number", milage:'Number'}) // test
 
-// createInstance(require('./schema.js')['Player'],{
+// createInstance(Player,{
 //     p_id:33,
 //     created_date:new Date().toISOString(),
 //     player_name:'sharry',
@@ -126,3 +133,12 @@ const exportModule = (path,schema) => {
 //     losses:5,
 //     total:3
 // })
+
+// createInstance(Car,
+// {
+// brand:'Mazda',
+// model:'Qx3',
+// year:2025,
+// milage:1000,
+// })
+
