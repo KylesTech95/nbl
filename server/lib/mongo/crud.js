@@ -1,7 +1,7 @@
 const { model } = require('mongoose');
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
 const path = require('path');
-const {Team,Player} = require('./schema.js')
+const {Team,Player} = require('./schema.js');
 
 
 // create
@@ -15,7 +15,8 @@ const createSchema = async (schema_name='',object={}) => {
         console.error({error:'check your datatypes'})
         return false;
     } 
-    if(values.find(v=>!/^(\[?(Mixed|String|Number|Date)\]?)?$/g.test(v))){
+    console.log(values)
+    if(values.find(v=>!/^(\[?(Mixed|String|Number|Date|Boolean)\]?)?$/g.test(v))){
         console.error({error:'check your object values'})
         return false;
     }
@@ -71,14 +72,17 @@ const createInstance = (Model,payload={}) => {
 
 
 
+
+
 // update
 //___________________________________________________________________
-const updateInstance = async (Model,filter={},update={},options={}) => {
+
+const updateOne = async (Model,filter={},update={},options={}) => {
     let response = await Model.updateOne(filter,update,options);
     if(!response)console.error('UPDATE - something went wrong')
     process.nextTick(()=>process.exit(0))
 }
-
+// update many
 async function updateMany(Model,filter={},update={},options={}) {
     let response = await Model.updateMany(filter,update,options);
     if(!response)console.error('UPDATE - something went wrong')
@@ -90,12 +94,9 @@ const saveData = async (data) => {
     process.nextTick(()=>process.exit(0))
 }
 
-
-
-
-
 // delete
 //___________________________________________________________________
+
 
 
 
@@ -118,10 +119,6 @@ const writeLineToFile = async(path,line,output,options={})=> {
     let diff = Math.abs(modFile.split`\n`.length - lines.length);
     console.log("Difference in Length:\n"+diff)
 }
-
-
-
-
 // update module exports
 const exportModule = (path,schema) => {
     if(!path || !schema) {
@@ -129,18 +126,15 @@ const exportModule = (path,schema) => {
     }
     let file = readFileSync(path,'utf-8');
     let lines = file.split`\n`;
-    let copy = [...lines];
     
     let ending = lines.indexOf(lines.filter(ln => /module\.exports/gi.test(ln))[0]);// get the index from file
     lines[ending] = lines[ending].replace(/(\})/g,`, ${schema} $1`);
 
     writeLineToFile(path,ending,lines[ending],{type:'module'}) // update module.exports
 }
-
-
 // test create schema
+// createSchema('game',{g_id:"String",created_date:"Date",active:"Boolean",completed:"Boolean",canceled:"Boolean",duration:"Number"})
 // createSchema('Car',{brand:'String',model:"String",year:"Number", milage:'Number'}) // test
-
 // createInstance(Player,{
 //     p_id:33,
 //     created_date:new Date().toISOString(),
@@ -150,4 +144,8 @@ const exportModule = (path,schema) => {
 //     total:3
 // })
 
-module.exports = {saveData, createInstance, updateInstance, updateMany}
+
+
+
+
+module.exports = {saveData, createInstance, updateOne, updateMany}

@@ -9,7 +9,7 @@ const playerSchema = new Schema({
     created_date:Date, // data created
     player_name:String, // player name 
 })
-// stats
+// stats schema
 const statsSchema = new Schema({
     p_id:Number,
     wins:Number, // wins
@@ -17,6 +17,8 @@ const statsSchema = new Schema({
     total_games:Number,
     points:Number,
     assists:Number,
+    steals:Number,
+    turnovers:Number,
     
 })
 // team schema
@@ -26,12 +28,25 @@ const teamSchema = new Schema({
     created_date:Date, // data created
 })
 
+// gameSchema
+// Create on 2025-05-13T01:41:05.070Z
+const gameSchema = new Schema({
+g_id:String,
+location:String,
+created_date:Date,
+active:Boolean,
+completed:Boolean,
+canceled:Boolean,
+duration:Number
+})
 //_____________________________________schema_end
 
 // create model
 const Player = model("Player", playerSchema);
 const Stats = model("Stat", statsSchema)
 const Team = model("Team", teamSchema);
+const Game = model("Game", gameSchema);
 
-module.exports = { Team, Stats , Player }
+module.exports = { Team, Stats , Player , Game }
+
 
