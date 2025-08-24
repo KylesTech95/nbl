@@ -15,18 +15,18 @@ mongoose.connect(process.env.MONGO_URI) // mongoose connection
 
 
 // create mock reservation
-const cookout = createInstance(Reservation, {
-    r_id:'fj9jf239f',
-    firstname:'Sean',
-    lastname:'Mason',
-    email:'smason@user.com',
-    createAt:Date.now(),
-    updatedAt:Date.now() + 180000,
-    canceled:false,
-    approvalDetails
-})
+// const cookout = createInstance(Reservation, {
+//     r_id:'fj9jf239f',
+//     firstname:'Sean',
+//     lastname:'Mason',
+//     email:'smason@user.com',
+//     createAt:Date.now(),
+//     updatedAt:Date.now() + 180000,
+//     canceled:false,
+//     approvalDetails
+// })
 
-saveData(cookout)
+// saveData(cookout)
 // create instance
 // let player1 = createInstance(Player,{
 //     p_id:21,
