@@ -1,4 +1,5 @@
 require('dotenv').config();
+const {readdirSync} = require('fs')
 const express = require('express');
 const app = express();
 const port = 5535;
@@ -28,7 +29,16 @@ app.route('/').get((req,res)=>{
     // if the path is actually home
     if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
-            test:'test'
+            test:'test',
+            partials:readdirSync(path.join(__dirname,'..','public','partials'),'utf8').map(x=>{
+                // create an object
+                let prop,val,result={};
+                prop = x.slice(0,-4);
+                val = prop;
+                result[prop] = val;
+
+                return JSON.stringify(result)
+            })
         })
     }
 })
