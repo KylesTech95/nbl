@@ -8,6 +8,9 @@ const playerSchema = new Schema({
     p_id:Number, // id
     created_date:Date, // data created
     player_name:String, // player name 
+    createAt:Date,
+    updatedAt:Date,
+
 })
 // stats schema
 const statsSchema = new Schema({
@@ -19,10 +22,15 @@ const statsSchema = new Schema({
     assists:Number,
     steals:Number,
     turnovers:Number,
+    createAt:Date,
+    updatedAt:Date,
+
     
 })
 // team schema
 const teamSchema = new Schema({
+    createAt:Date,
+    updatedAt:Date,
     t_id:Number, // id
     players:[String], // array of names
     created_date:Date, // data created
@@ -33,11 +41,23 @@ const teamSchema = new Schema({
 const gameSchema = new Schema({
 g_id:String,
 location:String,
-created_date:Date,
+createAt:Date,
+updatedAt:Date,
 active:Boolean,
 completed:Boolean,
 canceled:Boolean,
-duration:Number
+duration:Number,
+})
+
+const reservationSchema = new Schema({
+    r_id:String,
+    firstname:String,
+    lastname:String,
+    email:String,
+    createAt:Date,
+    updatedAt:Date,
+    canceled:Boolean,
+    approvalDetails:Object,
 })
 //_____________________________________schema_end
 
@@ -46,7 +66,8 @@ const Player = model("Player", playerSchema);
 const Stats = model("Stat", statsSchema)
 const Team = model("Team", teamSchema);
 const Game = model("Game", gameSchema);
+const Reservation = model("Reservation",reservationSchema);
 
-module.exports = { Team, Stats , Player , Game }
+module.exports = { Team, Stats , Player , Game, Reservation }
 
 

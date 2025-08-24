@@ -1,12 +1,32 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const { Team, Stats , Player, Game } = require('./schema.js');
-const { saveData,createInstance, updateOne, updateMany } = require('./crud.js')
+const { Team, Stats , Player, Game, Reservation } = require('./schema.js');
+const { saveData,createInstance, updateOne, updateMany} = require('./crud.js')
+const approvalDetails = { // keep details for reservation
+        approvedBy: null, // Reference to admin user who approved
+        approvedAt: null,
+        deniedBy: null,
+        deniedAt: null,
+        reason: null // Optional: reason for denial
+}
 
 // mongoose connection
 mongoose.connect(process.env.MONGO_URI) // mongoose connection
 
 
+// create mock reservation
+const cookout = createInstance(Reservation, {
+    r_id:'fj9jf239f',
+    firstname:'Sean',
+    lastname:'Mason',
+    email:'smason@user.com',
+    createAt:Date.now(),
+    updatedAt:Date.now() + 180000,
+    canceled:false,
+    approvalDetails
+})
+
+saveData(cookout)
 // create instance
 // let player1 = createInstance(Player,{
 //     p_id:21,
@@ -34,16 +54,6 @@ mongoose.connect(process.env.MONGO_URI) // mongoose connection
 
 // update many instances
 // updateMany(Player,{p_id:{$gte: 20}},{$set: {player_name:'name_updated'}})
-
-
-
-
-
-
-
-
-
-
 
 //__________________________________stats
 // let stats = new Stats({
