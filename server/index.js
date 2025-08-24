@@ -1,21 +1,49 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 5535;
 const cors = require('cors')
 const path = require('path')
 const bp = require('body-parser')
+const onedrive = require('onedrive-api')
+
+
+const dest = { // destination
+    reservation:'reservation',
+    game:'game'
+}
 
 // middleware
 app.use(cors())
 app.use(bp.urlencoded())
 app.use(express.json())
-app.use(express.static(path.join(__dirname,'../public')))
+app.use(express.static(path.join(__dirname,'..','public')))
 
 
 // route
 // app.route('/').get((req,res)=>{
 //     res.send('Hello NBL');
 // })
+
+
+// onedrive
+// list children of a given root directory
+
+// onedrive.items.listChildren({
+//     accessToken: process.env.REG_APP_CLIENT_SEC,
+//     itemId: "root",
+//     drive: "", // 'me' | 'user' | 'drive' | 'group' | 'site'
+//     driveId: "", // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
+//   })
+//   .then((childrens) => {
+//     console.log(childrens);
+//     // list all children of given root directory
+//     //
+//     // console.log(childrens);
+//     // returns body of https://dev.onedrive.com/items/list.htm#response
+//   });
+
+/*------------------------------------------- */
 
 
 
