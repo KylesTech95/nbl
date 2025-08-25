@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const { Team, Stats , Player, Game, Reservation } = require('./schema.js');
+const { Team, Stats , Player, Game, Reservation, Event } = require('./schema.js');
 const { saveData,createInstance, updateOne, updateMany} = require('./crud.js')
 const approvalDetails = { // keep details for reservation
         approvedBy: null, // Reference to admin user who approved

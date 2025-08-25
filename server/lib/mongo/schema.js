@@ -49,8 +49,18 @@ canceled:Boolean,
 duration:Number,
 })
 
+const eventSchema = new Schema({
+    e_id:String,
+    name:String,
+    createAt:Date,
+    updatedAt:Date,
+    canceled:Boolean,
+    completed:Boolean,
+    rescheduled:Boolean,
+})
 const reservationSchema = new Schema({
     r_id:String,
+    e_id:String,
     firstname:String,
     lastname:String,
     email:String,
@@ -67,7 +77,8 @@ const Stats = model("Stat", statsSchema)
 const Team = model("Team", teamSchema);
 const Game = model("Game", gameSchema);
 const Reservation = model("Reservation",reservationSchema);
+const Event = model("Event",eventSchema);
 
-module.exports = { Team, Stats , Player , Game, Reservation }
+module.exports = { Team, Stats , Player , Game, Reservation, Event }
 
 

@@ -29,15 +29,22 @@
         cursor:none;
     }
 
+    .margin-top-25{
+        margin-top:.25rem;
+
+    }
     #select-btn{
+        transition: .25s;
         color:#fff;
-        background:#000;
+        background:#f00;
+        border-radius:12px;
         padding:.5rem;
         display:flex;
         flex-direction: column;
         align-items: center;
         justify-content: start;
-        border:2px dotted #fff;
+        border-bottom: .5px solid #fff;
+        /* border:2px dotted #fff; */
         height:100%;
     }
 
@@ -47,26 +54,24 @@
         max-height:175px;
         border-bottom:.5px solid #ffffff;
         position:relative;
-        padding:.5rem 0 0 .5rem;
-
+        padding:.5rem .5rem;
+        /* border:2px solid yellow; */
     }
 
-
-    #title-container{
-        /* border:2px solid #fff; */
-    }
     #header-title{
         position:absolute;
         bottom:2.5px;
         left:5px;
-        animation:leftToRight 5s normal;
+        /* animation:leftToRight 5s normal; */
         font-size:30pt;
         font-family:'basketball';
         letter-spacing:2.5px;
         color:#fff;
+        transform:translate(15px,4px);
+        letter-spacing: 8px;
     }
 
-    @keyframes leftToRight {
+    /*@keyframes leftToRight {
             from{
                 transform:translate(0,0);
             }
@@ -74,7 +79,7 @@
                 transform:translate(15px,4px);
                 letter-spacing: 8px;
             }
-    }
+    }*/
 
     #bball{
         transform:rotate(20deg);
@@ -86,8 +91,8 @@
         /* border:2px solid red; */
         width:50%;
         position:absolute;
-        right:0;
-        top:0;
+        right:15px;
+        top:5px;
         min-height:125px;
         max-height:175px;
     }
@@ -97,8 +102,10 @@
         height:100%;
         font-size:18pt;
     }
-    #nav>ul>li>a{
+    #nav>ul>li>a>p{
         color:#ffffff;
+        text-align: center;
+        padding:.25rem 0;
     }
     
 
@@ -117,4 +124,11 @@
     #main-title{
         color:#fff;
     } 
+
+    @media screen and (min-width:1000px) {
+        #select-btn:hover{
+            background:rgba(255, 0, 0, 0.524);
+            cursor:pointer;
+        }
+    }
 </style>

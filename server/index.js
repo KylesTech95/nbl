@@ -37,6 +37,13 @@ app.route('/').get((req,res)=>{
 })
 
 
+app.route('/event/select/:val').get((req,res)=>{
+    const {val} = req.params;
+    console.log(val);
+    res.json({value:val})
+})
+
+
 // onedrive
 // list children of a given root directory
 
