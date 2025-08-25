@@ -1,0 +1,23 @@
+<nav id="nav">
+    <ul id="nav-ul">
+        <% navlinks.map((link,index) => { %>
+          <li class="nav-list-item">
+                <a href="#" class="nav-list-link"> 
+                    <% if(link==='Events'){ %>
+                        <p> <%= link %></p>
+                        <select name="event" id="select-event">
+                            <option value="0">None</option>
+                            <option value="1">Basketball Game (Regular)</option>
+                            <option value="2">Baskebtball Game (Tournament)</option>
+                            <option value="3">Cookout</option>
+                        </select>
+
+                        <div id="select-btn" class="hidden">Go</div>
+                    <% } else { %>
+                        <p> <%= link %></p>
+                        <% } %>
+                </a>
+          </li>
+        <% }) %>
+    </ul>
+</nav>

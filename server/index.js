@@ -12,6 +12,7 @@ const dest = { // destination
     reservation:'reservation',
     game:'game'
 }
+const navigation = require("./lib/common/navigation.json")
 
 
 // set view engine
@@ -30,15 +31,7 @@ app.route('/').get((req,res)=>{
     if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
             test:'test',
-            partials:readdirSync(path.join(__dirname,'..','public','partials'),'utf8').map(x=>{
-                // create an object
-                let prop,val,result={};
-                prop = x.slice(0,-4);
-                val = prop;
-                result[prop] = val;
-
-                return JSON.stringify(result)
-            })
+            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
         })
     }
 })

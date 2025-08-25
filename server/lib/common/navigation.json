@@ -1,0 +1,11 @@
+{
+    "Home":{
+        "open":false
+    },
+    "Events":{
+        "open":true
+    },
+    "Contact":{
+        "open":false
+    }
+}

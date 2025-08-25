@@ -6,27 +6,27 @@
     <!-- <link rel="stylesheet" href="../stylesheet/styles.css"> -->
     <title>NBL</title>
 </head>
+
+<!-- styles -->
+<%- include("./stylesheet/styles.ejs") %>
+
+
+
 <body>
     
     <!-- header -->
+    <%- include('./partials/header.ejs') %>
 
 
     <!-- main -->
-     <h1>Hello NBL</h1>
+    <%- include('./partials/main.ejs') %>
+     
 
-    <!-- <% for (let i = 0; i < partials.length; i++) { %>
-    <%= partials[i] %>
-    <br>
-    <% } %> -->
+
     <!-- footer -->
-     <!-- access the array of stringified object -->
-     <%= partials[0] %>
+    <%- include('./partials/footer.ejs') %>
 
 
-
-
-
-
-    <!-- <script src="../javascript/main.js" type="module"></script> -->
+    <script src="../javascript/main.js" type="module"></script>
 </body>
 </html>
