@@ -16,28 +16,15 @@ const dest = { // destination
 }
 const navigation = require("./lib/common/navigation.json")
 
-
-// set view engine
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname,'..','public'))
-
-// middleware
-app.use(express.static(path.join(__dirname,'..','public')))
-app.use(cors())
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
-
-// route
-app.route('/').get((req,res)=>{
-    // if the path is actually home
-    if(/^\/$/.test(req.path) && req.path.length===1){
-        res.render('index',{
-            test:'test',
-            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-        })
+/* -------------------------------------------------- */
+// template details 
+let gameDetails = {
+        dealer:null, // the id (p_id) of the dealer
+        winning_score:0,
+        losing_acore:0,
+        winners:[], // 5 players = 1 team
+        losers:[], // array of IDs (p_id)
     }
-})
-
 let eventDetails = {
     start_date:null,
     end_date:null,
@@ -49,6 +36,31 @@ let default_options = {
     completed:false,
     rescheduled:false,
 }
+/* -------------------------------------------------- */
+
+// set view engine
+app.set('view engine', ejs)
+app.set('views', path.join(__dirname,'..','public'))
+
+// middleware
+app.use(express.static(path.join(__dirname,'..','public')))
+app.use(cors())
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
+// routes
+app.route('/').get((req,res)=>{
+    // if the path is actually home
+    if(/^\/$/.test(req.path) && req.path.length===1){
+        res.render('index',{
+            test:'test',
+            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+        })
+    }
+})
+
+
+
 app.route('/event/create').post((req,res)=>{
     let {
         event_name,
@@ -82,6 +94,12 @@ app.route('/event/create').post((req,res)=>{
     createEvent(payload);
     res.json(payload)
 })
+
+app.route('/event/list').get((req,res)=>{
+
+})
+
+
 
 app.route('/option/select/:val').get((req,res)=>{
     

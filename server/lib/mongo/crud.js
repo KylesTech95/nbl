@@ -1,4 +1,3 @@
-const { model } = require('mongoose');
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
 const path = require('path');
 const {Team,Player} = require('./schema.js');
@@ -67,6 +66,12 @@ const createInstance = (Model,payload={}) => {
 // read
 //___________________________________________________________________
 
+// find all instances
+const findAll = async (Model, options={}) => {
+    let data = await Model.find(options);
+    console.log(data);
+    process.nextTick(()=>process.exit(0))
+}
 
 
 
@@ -97,7 +102,11 @@ const saveData = async (data) => {
 // delete
 //___________________________________________________________________
 
+const deleteAll = async (model, options = {}) => {
+    await model.deleteMany(options); // deletes anything
+        process.nextTick(()=>process.exit(0))
 
+}
 
 
 
@@ -148,4 +157,4 @@ const exportModule = (path,schema) => {
 
 
 
-module.exports = {saveData, createInstance, updateOne, updateMany}
+module.exports = {saveData, createInstance, updateOne, updateMany, findAll, deleteAll}

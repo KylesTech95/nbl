@@ -24,7 +24,6 @@ const statsSchema = new Schema({
     turnovers:Number,
     createAt:Date,
     updatedAt:Date,
-
     
 })
 // team schema
@@ -47,6 +46,7 @@ active:Boolean,
 completed:Boolean,
 canceled:Boolean,
 duration:Number,
+gameDetails:Object,
 })
 
 const eventSchema = new Schema({
