@@ -13,8 +13,10 @@ select_element.onchange = () => updateOptionButton(select_element,select_btn)
 
 select_btn.onclick = async () => {
     console.log("i clicked it")
+    let val = +select_element.value;
+    console.log(select_element.value)
 
-    await fetch('/option/select/'+`${select_element.value}`)
+    val > 0 ? await fetch('/option/select/'+`${select_element.value}`) : null;
 }
 
 
@@ -25,10 +27,12 @@ function updateOptionButton(val,btn){
     switch(true){
         case val > 0:
         btn.classList.remove('hidden')
+        btn.classList.remove('no-pointer')
         break;
 
-        case val < 1:
+        case val < 1. && val > 0:
         btn.classList.add('hidden')
+        btn.classList.add('no-pointer')
         break;
 
         default:
