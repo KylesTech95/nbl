@@ -1,5 +1,5 @@
 <div id="event-container" class="">
-    <form action="/event/create">
+    <form action="/event/create" method="post">
             <!-- event name -->
             <div id="name-container">
                 <label for="event_name">Event Name</label>
@@ -9,7 +9,7 @@
             <!-- event description -->
             <div id="description-container">
                 <label for="event_description">Event Description</label>
-                <input type="text" description="event_description" id="event-description">
+                <input type="text" name="event_description" id="event-description">
             </div>
             
             <!-- event date -->
@@ -17,12 +17,12 @@
                 <!-- event start date -->
                 <div class="date-col">
                     <label for="event_start_date">Start Date</label>
-                    <input type="date" description="event_start_date" id="event-start-date">
+                    <input type="date" name="event_start_date" id="event-start-date">
                 </div>
                 <!-- event end date -->
                 <div class="date-col">
                     <label for="event_end_date">End Date</label>
-                    <input type="date" description="event_end_date" id="event-end-date">
+                    <input type="date" name="event_end_date" id="event-end-date">
                 </div>
             </div>
             
@@ -33,34 +33,32 @@
                 <label for="event_start_time">Start Time</label>
                 <div class="time-col">
                     <div>
-                        <input class="num-time" type="number" min="0" max="9" description="event_start_time0">
-                        <input class="num-time" type="number" min="0" max="9" description="event_start_time1">
+                        <input class="num-time" type="number" min="0" max="9" name="event_start_time0">
+                        <input class="num-time" type="number" min="0" max="9" name="event_start_time1">
                     </div>
                     <p>:</p>
                     <div>
-                        <input class="num-time" type="number" min="0" max="9" description="event_start_time2">
-                        <input class="num-time" type="number" min="0" max="9" description="event_start_time3">
+                        <input class="num-time" type="number" min="0" max="9" name="event_start_time2">
+                        <input class="num-time" type="number" min="0" max="9" name="event_start_time3">
                     </div>
                 </div>
                 <!-- event end time -->
                 <label for="event_end_time">End Time</label>
                 <div class="time-col">
                     <div>
-                        <input class="num-time" type="number" min="0" max="9" description="event_end_time0">
-                        <input class="num-time" type="number" min="0" max="9" description="event_end_time1">
+                        <input class="num-time" type="number" min="0" max="9" name="event_end_time0">
+                        <input class="num-time" type="number" min="0" max="9" name="event_end_time1">
                     </div>
                     <p>:</p>
                     <div>
-                        <input class="num-time" type="number" min="0" max="9" description="event_end_time2">
-                        <input class="num-time" type="number" min="0" max="9" description="event_end_time3">
+                        <input class="num-time" type="number" min="0" max="9" name="event_end_time2">
+                        <input class="num-time" type="number" min="0" max="9" name="event_end_time3">
                     </div>
                 </div>
             </div>
-            <!-- event start time -->
-
-            <!-- event end time -->
 
 
+            <button type="submit">Submit</button>
     </form>
 </div>
 

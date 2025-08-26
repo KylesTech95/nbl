@@ -1,6 +1,6 @@
 // console.log("hello NBL") // vstd
 const navitems = [...document.querySelectorAll('#nav>ul>li>a>p')];
-const select_element = document.getElementById('select-event');
+const select_element = document.getElementById('select-option');
 const select_btn = document.getElementById('select-btn');
 const header = document.getElementById('header-main')
 const maintitle = document.getElementById('main-title')
@@ -14,7 +14,7 @@ select_element.onchange = () => updateOptionButton(select_element,select_btn)
 select_btn.onclick = async () => {
     console.log("i clicked it")
 
-    await fetch('/event/select/'+`${select_element.value}`)
+    await fetch('/option/select/'+`${select_element.value}`)
 }
 
 

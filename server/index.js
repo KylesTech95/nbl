@@ -1,4 +1,6 @@
 require('dotenv').config();
+
+const { createEvent } = require('./lib/mongo/db.js')
 const {readdirSync} = require('fs')
 const express = require('express');
 const app = express();
@@ -18,12 +20,12 @@ const navigation = require("./lib/common/navigation.json")
 // set view engine
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname,'..','public'))
-// middleware
-app.use(cors())
-app.use(bp.urlencoded())
-app.use(express.json())
-app.use(express.static(path.join(__dirname,'..','public')))
 
+// middleware
+app.use(express.static(path.join(__dirname,'..','public')))
+app.use(cors())
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
 // route
 app.route('/').get((req,res)=>{
@@ -36,18 +38,60 @@ app.route('/').get((req,res)=>{
     }
 })
 
+let eventDetails = {
+    start_date:null,
+    end_date:null,
+    start_time:null,
+    end_time:null,
+}
+let default_options = {
+    canceled:false,
+    completed:false,
+    rescheduled:false,
+}
+app.route('/event/create').post((req,res)=>{
+    let {
+        event_name,
+        event_description,
+        event_start_date,
+        event_end_date,
+        event_start_time0,
+        event_start_time1,
+        event_start_time2,
+        event_start_time3,
+        event_end_time0,
+        event_end_time1,
+        event_end_time2,
+        event_end_time3} = req.body;
+    let payload = {};
+    payload.id = '31e33d31';
+    payload.name = event_name;
+    payload.description = event_description;
+    payload.createdAt = Date.now()
+    payload.updatedAt = null;
+    // event details
+    eventDetails.start_date = event_start_date;
+    eventDetails.end_date = event_end_date;
+    eventDetails.start_time = `${event_start_time0}${event_start_time1}:${event_start_time2}${event_start_time3}`
+    eventDetails.end_time = `${event_end_time0}${event_end_time1}:${event_end_time2}${event_end_time3}`
 
-app.route('/event/select/:val').get((req,res)=>{
+    payload.eventDetails = eventDetails
+    payload = {...payload,...default_options}
+
+    // console.log(payload)
+    createEvent(payload);
+    res.json(payload)
+})
+
+app.route('/option/select/:val').get((req,res)=>{
     
-    const options = ['create_event'];
     let {val} = req.params;
     // since None is not an option, decrement value by 1
     val--
 
     console.log(val);
-    res.json({value:options[val]})
+    res.json({value:val})
 })
-
 
 // onedrive
 // list children of a given root directory

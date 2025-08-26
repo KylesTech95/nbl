@@ -58,6 +58,7 @@ const eventSchema = new Schema({
     canceled:Boolean,
     completed:Boolean,
     rescheduled:Boolean,
+    eventDetails:Object,
 })
 const reservationSchema = new Schema({
     r_id:String,
