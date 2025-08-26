@@ -8,8 +8,8 @@ const playerSchema = new Schema({
     p_id:Number, // id
     created_date:Date, // data created
     player_name:String, // player name 
-    createAt:Date,
-    updatedAt:Date,
+    createdAt:String,
+    updatedAt:String,
 
 })
 // stats schema
@@ -22,14 +22,13 @@ const statsSchema = new Schema({
     assists:Number,
     steals:Number,
     turnovers:Number,
-    createAt:Date,
-    updatedAt:Date,
-    
+    createdAt:String,
+    updatedAt:String,    
 })
 // team schema
 const teamSchema = new Schema({
-    createAt:Date,
-    updatedAt:Date,
+    createdAt:String,
+    updatedAt:String,
     t_id:Number, // id
     players:[String], // array of names
     created_date:Date, // data created
@@ -40,8 +39,8 @@ const teamSchema = new Schema({
 const gameSchema = new Schema({
 g_id:String,
 location:String,
-createAt:Date,
-updatedAt:Date,
+createdAt:String,
+updatedAt:String,
 active:Boolean,
 completed:Boolean,
 canceled:Boolean,
@@ -53,8 +52,8 @@ const eventSchema = new Schema({
     e_id:String,
     name:String,
     description:String,
-    createAt:Date,
-    updatedAt:Date,
+    createdAt:String,
+    updatedAt:String,
     canceled:Boolean,
     completed:Boolean,
     rescheduled:Boolean,
@@ -66,8 +65,8 @@ const reservationSchema = new Schema({
     firstname:String,
     lastname:String,
     email:String,
-    createAt:Date,
-    updatedAt:Date,
+    createdAt:String,
+    updatedAt:String,
     canceled:Boolean,
     approvalDetails:Object,
 })

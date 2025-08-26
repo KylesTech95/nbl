@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta navme="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../stylesheet/styles.css"> -->
     <title>Events</title>
 </head>
 
 <!-- styles -->
 <%- include("./stylesheet/styles.ejs") %>
+<%- include("./stylesheet/events.ejs") %>
 
 
 
@@ -19,8 +19,9 @@
 
 
     <!-- main -->
-    <!-- <%- include('./partials/main.ejs') %> -->
-     
+        <% for(let i = 0; i < event_data.length; i++) {%>
+            <li><%= event_data[i].name %> (Date: <%= event_data[i].createdAt %>)</li>
+            <% } %>
 
 
     <!-- footer -->
@@ -28,5 +29,6 @@
 
 
     <script src="../javascript/events.js" type="module"></script>
+    <script src="../javascript/main.js" type="module"></script>
 </body>
 </html>

@@ -31,10 +31,10 @@ mongoose.connect(process.env.MONGO_URI) // mongoose connection
 
 
 // create event
-// function createEvent(payload){
-//         const event = createInstance(Event, payload);
-//         saveData(event)
-// }
+function createEvent(payload){
+        const event = createInstance(Event, payload);
+        saveData(event)
+}
 
 // create mock reservation
 // const cookout = createInstance(Reservation, {
@@ -107,8 +107,8 @@ mongoose.connect(process.env.MONGO_URI) // mongoose connection
 // console.log(stats)
 // saveData(stats) // save stats
 
+// deleteAll(Event);
 
-// module.exports = {createEvent}
 
+module.exports = {createEvent}
 
-// deleteAll(Game);

@@ -69,8 +69,9 @@ const createInstance = (Model,payload={}) => {
 // find all instances
 const findAll = async (Model, options={}) => {
     let data = await Model.find(options);
-    console.log(data);
-    process.nextTick(()=>process.exit(0))
+    // console.log(data);
+    return data;
+    // process.nextTick(()=>process.exit(0))
 }
 
 

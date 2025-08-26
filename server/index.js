@@ -1,5 +1,6 @@
 require('dotenv').config();
-
+const { Team, Stats , Player, Game, Reservation, Event } = require('./lib/mongo/schema.js')
+const { saveData,createInstance, updateOne, updateMany, findAll, deleteAll } = require('./lib/mongo/crud.js')
 const { createEvent } = require('./lib/mongo/db.js')
 const {readdirSync} = require('fs')
 const express = require('express');
@@ -79,7 +80,7 @@ app.route('/event/create').post((req,res)=>{
     payload.id = '31e33d31';
     payload.name = event_name;
     payload.description = event_description;
-    payload.createdAt = Date.now()
+    payload.createdAt = Date.now();
     payload.updatedAt = null;
     // event details
     eventDetails.start_date = event_start_date;
@@ -95,8 +96,14 @@ app.route('/event/create').post((req,res)=>{
     res.json(payload)
 })
 
-app.route('/event/list').get((req,res)=>{
-
+app.route('/event/list').get(async(req,res)=>{
+    // get list of events from db
+    const events = await findAll(Event); // array of events
+    console.log(events)
+    res.render('events.ejs',{
+        navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+        event_data:events // array of events
+    })
 })
 
 
