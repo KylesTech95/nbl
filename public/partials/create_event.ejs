@@ -1,7 +1,66 @@
-<div id="event_container">
+<div id="event-container" class="">
     <form action="/event/create">
+            <!-- event name -->
+            <div id="name-container">
+                <label for="event_name">Event Name</label>
+                <input type="text" name="event_name" id="event-name">
+            </div>
 
-        
+            <!-- event description -->
+            <div id="description-container">
+                <label for="event_description">Event Description</label>
+                <input type="text" description="event_description" id="event-description">
+            </div>
+            
+            <!-- event date -->
+            <div id="date-container">
+                <!-- event start date -->
+                <div class="date-col">
+                    <label for="event_start_date">Start Date</label>
+                    <input type="date" description="event_start_date" id="event-start-date">
+                </div>
+                <!-- event end date -->
+                <div class="date-col">
+                    <label for="event_end_date">End Date</label>
+                    <input type="date" description="event_end_date" id="event-end-date">
+                </div>
+            </div>
+            
+
+
+            <div id="time-container">
+                <!-- event start time -->
+                <label for="event_start_time">Start Time</label>
+                <div class="time-col">
+                    <div>
+                        <input class="num-time" type="number" min="0" max="9" description="event_start_time0">
+                        <input class="num-time" type="number" min="0" max="9" description="event_start_time1">
+                    </div>
+                    <p>:</p>
+                    <div>
+                        <input class="num-time" type="number" min="0" max="9" description="event_start_time2">
+                        <input class="num-time" type="number" min="0" max="9" description="event_start_time3">
+                    </div>
+                </div>
+                <!-- event end time -->
+                <label for="event_end_time">End Time</label>
+                <div class="time-col">
+                    <div>
+                        <input class="num-time" type="number" min="0" max="9" description="event_end_time0">
+                        <input class="num-time" type="number" min="0" max="9" description="event_end_time1">
+                    </div>
+                    <p>:</p>
+                    <div>
+                        <input class="num-time" type="number" min="0" max="9" description="event_end_time2">
+                        <input class="num-time" type="number" min="0" max="9" description="event_end_time3">
+                    </div>
+                </div>
+            </div>
+            <!-- event start time -->
+
+            <!-- event end time -->
+
+
     </form>
 </div>
 

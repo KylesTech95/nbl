@@ -6,7 +6,7 @@ const port = 5535;
 const cors = require('cors')
 const path = require('path')
 const bp = require('body-parser')
-const onedrive = require('onedrive-api')
+// const onedrive = require('onedrive-api')
 const ejs = 'ejs'
 const dest = { // destination
     reservation:'reservation',
@@ -38,9 +38,14 @@ app.route('/').get((req,res)=>{
 
 
 app.route('/event/select/:val').get((req,res)=>{
-    const {val} = req.params;
+    
+    const options = ['create_event'];
+    let {val} = req.params;
+    // since None is not an option, decrement value by 1
+    val--
+
     console.log(val);
-    res.json({value:val})
+    res.json({value:options[val]})
 })
 
 

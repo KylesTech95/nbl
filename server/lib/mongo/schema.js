@@ -52,6 +52,7 @@ duration:Number,
 const eventSchema = new Schema({
     e_id:String,
     name:String,
+    description:String,
     createAt:Date,
     updatedAt:Date,
     canceled:Boolean,
