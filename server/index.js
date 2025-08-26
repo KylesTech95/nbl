@@ -37,6 +37,13 @@ let default_options = {
     completed:false,
     rescheduled:false,
 }
+let approvalDetails = { // keep details for reservation
+        approvedBy: null, // Reference to admin user who approved
+        approvedAt: null,
+        deniedBy: null,
+        deniedAt: null,
+        reason: null // Optional: reason for denial
+}
 /* -------------------------------------------------- */
 
 // set view engine

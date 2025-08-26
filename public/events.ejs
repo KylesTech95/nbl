@@ -19,9 +19,17 @@
 
 
     <!-- main -->
-        <% for(let i = 0; i < event_data.length; i++) {%>
-            <li><%= event_data[i].name %> (Date: <%= event_data[i].createdAt %>)</li>
-            <% } %>
+     <ul id="event-list-container">
+
+    <% for(let i = 0; i < event_data.length; i++) {%>
+        <!-- list item -->
+     <li class="event-list-item">
+            <p class="no-pointer">(Date: <%= event_data[i].createdAt %>)</p>
+            <p class="no-pointer event-list-para"><%= event_data[i].name %></p>
+     </li>
+        <% } %>
+
+    </ul>
 
 
     <!-- footer -->
