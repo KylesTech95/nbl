@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Team, Stats , Player, Game, Reservation, Event } = require('./lib/mongo/schema.js')
-const { saveData,createInstance, updateOne, updateMany, findAll, deleteAll } = require('./lib/mongo/crud.js')
+const { saveData,createInstance, updateOne, updateMany, findAll,findOne, deleteAll } = require('./lib/mongo/crud.js')
 const { createEvent } = require('./lib/mongo/db.js')
 const {readdirSync} = require('fs')
 const express = require('express');
@@ -68,7 +68,21 @@ app.route('/').get((req,res)=>{
 })
 
 
+app.route('/event/read/:id').get(async(req,res)=>{
+    const {id} = req.params;
 
+    try{
+        const findById = await findOne(Event,{_id:id});
+        console.log(findById)
+        // render ejs
+        res.render('partials/read_event.ejs',{
+            event_data:findById
+        })
+    }
+    catch(err){
+        throw new Error(err)
+    }
+})
 app.route('/event/create').post((req,res)=>{
     let {
         event_name,
@@ -102,17 +116,20 @@ app.route('/event/create').post((req,res)=>{
     createEvent(payload);
     res.json(payload)
 })
-
 app.route('/event/list').get(async(req,res)=>{
-    // get list of events from db
-    const events = await findAll(Event); // array of events
-    console.log(events)
-    res.render('events.ejs',{
-        navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-        event_data:events // array of events
-    })
+    try{
+        // get list of events from db
+        const events = await findAll(Event); // array of events
+        // console.log(events)
+        res.render('events.ejs',{
+            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            event_data:events // array of events
+        })
+    }
+    catch(err){
+        throw new Error(err)
+    }
 })
-
 
 
 app.route('/option/select/:val').get((req,res)=>{

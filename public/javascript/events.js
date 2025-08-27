@@ -25,8 +25,12 @@
         // console.log(currentPos)
     }
  }
+ const handleClick = e => {
+    let targetLink = [...e.currentTarget.children][e.currentTarget.children.length-1].textContent
+    console.log(targetLink)
+       window.location.href = window.location.origin + '/event/read/' + targetLink
+ }
  /* ----------------- handle evenets ----------------- */
-
 
  // move over tiles
  let tt;
@@ -36,6 +40,10 @@
         // tt.onmouseover = handleMouseOver;
         // tt.onmouseleave = handleMouseLeave;
         // tt.onmousemove = handleMouseMove;
+
+        // click on tile
+        tt.onclick = handleClick
     }
  }
+
 

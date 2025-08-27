@@ -7,15 +7,6 @@ const { saveData,createInstance, updateOne, updateMany, findAll, deleteAll } = r
 mongoose.connect(process.env.MONGO_URI) // mongoose connection
 
 
-
-
-
-
-
-
-
-
-
 // find data
 // const op1 = {name:/cook/g};
 // const op2= {firstname:/cook/g};
@@ -26,7 +17,8 @@ mongoose.connect(process.env.MONGO_URI) // mongoose connection
 // create event
 function createEvent(payload){
         const event = createInstance(Event, payload);
-        saveData(event)
+        saveData(event);
+        return;
 }
 
 // create mock reservation
@@ -103,5 +95,5 @@ function createEvent(payload){
 // deleteAll(Event);
 
 
-module.exports = {createEvent}
+module.exports = { createEvent }
 

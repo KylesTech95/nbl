@@ -12,6 +12,7 @@
         justify-content: center;
         align-items: start;
         flex-wrap: wrap;
+        gap:.5rem;
     }
 
 
@@ -26,6 +27,8 @@
         align-items: center;
         justify-content: center;
         margin-left:.75rem;
+        transition: .25s;
+        box-shadow: 0 .25rem 12px .9px #333;
     }
     .no-pointer {
         pointer-events:none;
@@ -35,7 +38,11 @@
      }
 
 
-
+     .event-list-item:hover{
+        cursor:pointer;
+        transform:scale(.95);
+        box-shadow: none;
+     }
 
 
 

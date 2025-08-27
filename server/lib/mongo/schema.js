@@ -70,6 +70,19 @@ const reservationSchema = new Schema({
     canceled:Boolean,
     approvalDetails:Object,
 })
+
+// LeaderboardSchema
+// Create on 2025-08-26T23:25:59.837Z
+const LeaderboardSchema = new Schema({
+l_id:String,
+leaderboard_type:String,
+top5: Array,
+createdAt:String,
+updatedAt:String,
+completed:Boolean,
+canceled:Boolean,
+player_count:Number,
+})
 //_____________________________________schema_end
 
 // create model
@@ -79,7 +92,10 @@ const Team = model("Team", teamSchema);
 const Game = model("Game", gameSchema);
 const Reservation = model("Reservation",reservationSchema);
 const Event = model("Event",eventSchema);
+const Leaderboard = model("Leaderboard", LeaderboardSchema);
 
-module.exports = { Team, Stats , Player , Game, Reservation, Event }
+module.exports = { Team, Stats , Player , Game, Reservation, Event , Leaderboard , Leaderboard }
+
+
 
 

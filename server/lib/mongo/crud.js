@@ -1,6 +1,6 @@
 const { writeFileSync,readFileSync, appendFileSync, write } = require('node:fs');
 const path = require('path');
-const {Team,Player} = require('./schema.js');
+const { Team, Stats , Player, Game, Reservation, Event } = require('./schema.js');
 
 
 // create
@@ -74,6 +74,10 @@ const findAll = async (Model, options={}) => {
     // process.nextTick(()=>process.exit(0))
 }
 
+const findOne = async (Model, options={}) => {
+    let data = await Model.findOne(options);
+    return data;
+}
 
 
 
@@ -97,7 +101,8 @@ async function updateMany(Model,filter={},update={},options={}) {
 // save data
 const saveData = async (data) => {
     await data.save();
-    process.nextTick(()=>process.exit(0))
+    // process.nextTick(()=>process.exit(0))
+    return;
 }
 
 // delete
@@ -142,8 +147,9 @@ const exportModule = (path,schema) => {
 
     writeLineToFile(path,ending,lines[ending],{type:'module'}) // update module.exports
 }
+
 // test create schema
-// createSchema('game',{g_id:"String",created_date:"Date",active:"Boolean",completed:"Boolean",canceled:"Boolean",duration:"Number"})
+// createSchema('Leaderboard',{l_id:"String",createdAt:"String",updatedAt:"String",completed:"Boolean",canceled:"Boolean",player_count:"Number"})
 // createSchema('Car',{brand:'String',model:"String",year:"Number", milage:'Number'}) // test
 // createInstance(Player,{
 //     p_id:33,
@@ -158,4 +164,4 @@ const exportModule = (path,schema) => {
 
 
 
-module.exports = {saveData, createInstance, updateOne, updateMany, findAll, deleteAll}
+module.exports = {saveData, createInstance, updateOne, updateMany, findAll,findOne, deleteAll}
