@@ -16,7 +16,18 @@ select_btn.onclick = async () => {
     let val = +select_element.value;
     console.log(select_element.value)
 
-    val > 0 ? await fetch('/option/select/'+`${select_element.value}`) : null;
+    if(val > 0){
+        await fetch('/option/select/'+`${select_element.value}`).then(r=>r.json())
+        .then(data => {
+            console.log(data)
+            if(data['val'] < 1){
+                window.location.href = window.location.origin + '/event/list'
+            }
+        })
+    }
+    else {
+        return null
+    }
 }
 
 

@@ -137,9 +137,8 @@ app.route('/option/select/:val').get((req,res)=>{
     let {val} = req.params;
     // since None is not an option, decrement value by 1
     val--
-
     console.log(val);
-    res.json({value:val})
+    res.json({val:val})
 })
 
 // onedrive
