@@ -63,7 +63,7 @@ app.route('/').get((req,res)=>{
         res.render('index',{
             test:'test',
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-            dirspace:false,
+            dirspace:false // determines ,
         })
     }
 })
@@ -76,10 +76,10 @@ app.route('/event/read/:id').get(async(req,res)=>{
         const findById = await findOne(Event,{_id:id});
         console.log(findById)
         // render ejs
-        res.render('read_event.ejs',{
+        res.render('partials/read_event.ejs',{
             event_data:findById,
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-            dirspace:true,
+            dirspace:true, // determines 
         })
     }
     catch(err){
@@ -119,7 +119,9 @@ app.route('/event/create').post((req,res)=>{
     createEvent(payload);
     res.json(payload)
 })
-app.route('/event/list').get(async(req,res)=>{
+app.route('/event/list/:parameter').get(async(req,res)=>{
+    const paramStatus = ['all','upcoming','completed','canceled'];
+    const {parameter} = req.params;
     try{
         // get list of events from db
         const events = await findAll(Event); // array of events
@@ -127,7 +129,8 @@ app.route('/event/list').get(async(req,res)=>{
         res.render('events.ejs',{
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
             event_data:events, // array of events
-            dirspace:false,
+            dirspace:false, // determines 
+            parameter:!paramStatus.find(p=>new RegExp(p,'ig').test(parameter)) ? undefined : parameter,
         })
     }
     catch(err){

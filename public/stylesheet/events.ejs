@@ -3,11 +3,6 @@
         /* background:#fff !important; */
     }
 
-    /* @font-face {
-    font-family: 'basketball';
-    src: url('../fonts/Basketball.otf');
-} */
-
 /* #header-title{
         font-family:'basketball';
 } */
@@ -20,10 +15,16 @@
         justify-content: center;
         align-items: start;
         flex-wrap: wrap;
-        gap:.5rem;
+        gap:1.75rem;
+        padding:2rem .5rem;
     }
 
-
+    .bolder{
+    font-weight: bolder;
+}
+.caps{
+    text-transform: capitalize;
+}
     .event-list-item{
         height:175px;
         width:175px;
@@ -33,10 +34,12 @@
         display:flex;
         flex-direction:column;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
+        padding-top:.5rem;
         margin-left:.75rem;
         transition: .25s;
         box-shadow: 0 .25rem 12px .9px #333;
+        gap:10px;
     }
     .no-pointer {
         pointer-events:none;
@@ -46,6 +49,11 @@
      }
 
 
+     #events-title{
+        background:#000;
+        color:#fff;
+        font-family: 'basketball' 'bball';
+     }
      .event-list-item:hover{
         cursor:pointer;
         transform:scale(.95);

@@ -74,13 +74,14 @@ function createEvent(payload){
 // saveData(game2)
 
 // update instance 
-// updateOne(Game,{g_id:'njf3uj24'},{canceled:true})
+// updateOne(Event,{description:'golfing with friends'},{canceled:true})
 // updateOne(Player,{p_id:{$lte:40}},{player_name:"Chawlk"})
 // updateOne(Player,{player_name:'Mark'},{$set: {p_id:102}})
 // saveData(player1) // save player
 
 // update many instances
 // updateMany(Player,{p_id:{$gte: 20}},{$set: {player_name:'name_updated'}})
+// updateMany(Event,{description:'golfing with friends'},{canceled:true})
 
 //__________________________________stats
 // let stats = new Stats({

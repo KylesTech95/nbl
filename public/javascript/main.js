@@ -3,45 +3,47 @@ const navitems = [...document.querySelectorAll('#nav>ul>li>a>p')];
 const select_element = document.getElementById('select-option');
 const select_btn = document.getElementById('select-btn');
 const header = document.getElementById('header-main')
+const main = document.getElementById('main')
 const maintitle = document.getElementById('main-title')
+const eventtitle = document.getElementById('events-title')
+const eventContainer = document.getElementById('event-container-create')
+const eventlistcontainer = document.getElementById('event-list-container')
+
 
 
 // focus on select element
 focusSeelectElement('Options','Options')
 // update option button
 select_element.onchange = () => updateOptionButton(select_element,select_btn)
+// selection button (options)
+select_btn.onclick = updateOptionFromServer
+// plans for window onload
+window.onload = loadWindowPlans
 
-select_btn.onclick = async () => {
-    console.log("i clicked it")
-    let val = +select_element.value;
-    console.log(select_element.value)
-
-    if(val > 0){
-        await fetch('/option/select/'+`${select_element.value}`).then(r=>r.json())
-        .then(data => {
-            console.log(data)
-            if(data['val'] < 1){
-                window.location.href = window.location.origin + '/event/list'
-            }
-        })
-    }
-    else {
-        return null
-    }
-}
 
 
 /* ---------------------------- functions ----------------------------  */
 // detect change in selecting an event
 function updateOptionButton(val,btn){
+    const pathname = window.location.pathname;
     val = +val.value;
+    console.log(val)
     switch(true){
         case val > 0:
         btn.classList.remove('hidden')
         btn.classList.remove('no-pointer')
         break;
 
-        case val < 1. && val > 0:
+        case val === 0:
+        if(!/^\/$/.test(pathname))main.classList.add('hidden')
+        if(maintitle)maintitle.classList.remove('hidden')
+        if(eventlistcontainer)eventlistcontainer.classList.remove('no-display')
+        if(eventContainer)eventContainer.classList.add('hidden')
+        if(eventtitle){
+            let pathsplit = window.location.pathname.split`/`
+            let pathname = pathsplit[pathsplit.length-1];
+            eventtitle.textContent = pathname[0]+pathname.slice(1,pathname.length) + " Events"
+        }
         btn.classList.add('hidden')
         btn.classList.add('no-pointer')
         break;
@@ -68,4 +70,68 @@ function focusSeelectElement(string,expectation){
         }
     }
 }
+function loadWindowPlans(){
+    const pathname = window.location.pathname;
+    if(/^\/$/.test(pathname)){
+        main.classList.remove('hidden')
+    }
+}
+async function updateOptionFromServer(){
+    let val = +select_element.value;
+    console.log(select_element.value)
 
+    if(val > 0){
+        await fetch('/option/select/'+`${select_element.value}`).then(r=>r.json())
+        .then(data => {
+            const pathname = window.location.pathname;
+            console.log(data)
+                switch(true){
+                    
+                    case data['val'] === 0: // 0
+                    window.location.href = window.location.origin + '/event/list/all';
+                    break;
+                    case data['val'] === 1: // 1
+                    // maintitle.textContent = 'Create An Event'
+                    if(eventtitle){
+                        eventtitle.textContent = 'Create An Event'
+                        if(maintitle)maintitle.classList.add('hidden');
+                    } else {
+                        if(maintitle)maintitle.textContent = 'Create an Event';
+                    }
+                    if(eventlistcontainer)eventlistcontainer.classList.add('no-display')
+                    main.classList.remove('hidden')
+                    eventContainer.classList.remove('hidden')
+                    break;
+                    case data['val'] === .25: // 0
+                    window.location.href = window.location.origin + '/event/list/upcoming';
+                    break;
+                    case data['val'] === .5: // 0
+                    window.location.href = window.location.origin + '/event/list/completed';
+                    break;
+                    case data['val'] === .75: // 0
+                    window.location.href = window.location.origin + '/event/list/canceled';
+                    break;
+
+                    case data['val'] === 2: //2
+                    main.classList.remove('hidden')
+                    eventContainer.classList.add('hidden')
+                    if(eventlistcontainer)eventlistcontainer.classList.add('no-display')
+                    if(eventtitle){
+                        eventtitle.textContent = 'Create a Game';
+                        maintitle.classList.add('hidden')
+                    } else {
+                        maintitle.classList.remove('hidden')
+                        maintitle.textContent = 'Create a Game';
+                    }
+                    break;
+
+                    default:
+                    console.log(undefined);
+                    break;
+                }
+        })
+    }
+    else {
+        return null
+    }
+}

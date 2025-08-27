@@ -2,7 +2,7 @@
  const tiles = [...document.querySelectorAll('.event-list-item')];
 
 
- /* ----------------- handle evenets ----------------- */
+ /* ----------------- handle tile evenets ----------------- */
  let currentPos = {x:undefined,y:undefined};
  let insideTile = false;
  const handleMouseOver = e => {
@@ -43,6 +43,40 @@
 
         // click on tile
         tt.onclick = handleClick
+
+
+        let pullDateNum = tt.children[0].textContent.match(/[0-9]+/g);
+        let pullNum = pullDateNum ? +pullDateNum[0] : undefined;
+
+        function convertNumToDate(num,type){
+         switch(true){
+            case type==='iso-date':
+            return new Date(num).toDateString();
+            break;
+
+            case type==='iso-time':
+            return new Date(num).toTimeString();
+            break;
+
+            default:
+            console.log(undefined);
+            break;
+         }
+        }
+
+        let dateNum = convertNumToDate(pullNum,'iso-date');
+        let timeNum = convertNumToDate(pullNum,'iso-time')
+        timeNum = timeNum.split` `[0];
+
+        console.log(dateNum)
+        console.log(timeNum)
+
+        // plug in variables
+        tt.children[0].textContent = dateNum;
+        let newP = document.createElement('p');
+        newP.classList.add('bolder')
+        newP.textContent = timeNum;
+        tt.insertBefore(newP,tt.children[0])
     }
  }
 

@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: 'bball';
-    src: url('../../fonts/Basketball.otf');
+    src: url('../../fonts/Basketball.otf'); /* accessing same font from alternate directory*/
 }
 
 input::-webkit-outer-spin-button,
@@ -36,8 +36,11 @@ outline:none;
         justify-content: center;
     }
 
+    .no-display{
+        display:none !important;
+    }
     .hidden{
-        pointer-options: none;
+        pointer-events: none;
         opacity:0;
         cursor:none;
     }
@@ -64,6 +67,11 @@ outline:none;
         /* border:2px dotted #fff; */
         height:100%;
     }
+  #events-title{
+        background:#000;
+        color:#fff;
+        font-family: 'basketball' 'bball';
+     }
 
     #header{
         width:100%;
@@ -81,7 +89,7 @@ outline:none;
         left:5px;
         /* animation:leftToRight 5s normal; */
         font-size:30pt;
-        font-family:'basketball' 'bball';
+        font-family:'basketball' 'bball'; /* fallback font (bball) */
         letter-spacing:2.5px;
         color:#fff;
         transform:translate(15px,4px);
@@ -139,12 +147,14 @@ outline:none;
         border-radius: 20px;
     }
     #main-title{
+        font-family: 'basketball' 'bball';
         color:#fff;
     } 
 
-    #event-container{
+    #event-container-create,
+    #event-container-read{
         background:rgb(255, 255, 255);
-        height:90%;
+        height:100%;
         width:75%;
         border-radius: 18px;
         display:flex;
@@ -155,7 +165,7 @@ outline:none;
         padding:.5rem;
     }
 
-    #event_container > form { 
+    #event-container-create > form { 
         height:100%;
         width:inherit;
         display:flex;
@@ -164,7 +174,7 @@ outline:none;
         justify-content: space-evenly;
     }
     
-     #event_container > form > div {
+     #event-container-create > form > div {
         display:flex;
         flex-direction: column;
      }
@@ -173,7 +183,7 @@ outline:none;
         align-items: center;
         justify-content: center;
         gap:.5rem;
-        width:400px;
+        width:100%;
         border:2px solid green;
      }
 
@@ -186,7 +196,6 @@ outline:none;
         width:50px;
         font-size:22pt;
      }
-
 
     @media screen and (min-width:1000px) {
         #select-btn:hover{

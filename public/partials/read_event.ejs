@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta navme="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../stylesheet/styles.css"> -->
+    <title>NBL</title>
+</head>
+
+<!-- styles -->
+<%- include("../stylesheet/styles.ejs") %>
+
+
+<body>
+    
+    <!-- header -->
+    <%- include('./header.ejs') %>
+
+
+    <!-- main -->
+    <div id="event-container-read" class="">
+        <div id="event-nomenclature-container">
+            <h1 id="event-name"><%= event_data['name']%></h1>
+            <p id="event-description"><%= event_data['description']%></p>
+        </div>
+
+        <div id="event-details-container">
+            
+        </div>
+    </div>
+     
+    
+    <!-- footer -->
+    <%- include('./footer.ejs') %>
+
+
+    <script src="../../javascript/main.js" type="module"></script>
+</body>
+</html>
