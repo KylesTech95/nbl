@@ -1,4 +1,4 @@
 .env
 node_modules
 server/lib/sec
-./public/media/gif
+public/media/gif
