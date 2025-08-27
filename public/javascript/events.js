@@ -30,7 +30,7 @@
     console.log(targetLink)
        window.location.href = window.location.origin + '/event/read/' + targetLink
  }
- /* ----------------- handle evenets ----------------- */
+ /* ----------------- handle tile evenets ----------------- */
 
  // move over tiles
  let tt;
@@ -79,5 +79,3 @@
         tt.insertBefore(newP,tt.children[0])
     }
  }
-
-

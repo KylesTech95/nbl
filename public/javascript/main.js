@@ -22,6 +22,17 @@ window.onload = loadWindowPlans
 
 
 
+/* -------------------------- background images -------------------------- */
+const bgImg = new Image();
+bgImg.classList.add('bg-img')
+
+
+
+
+
+/* -------------------------- background images -------------------------- */
+
+
 /* ---------------------------- functions ----------------------------  */
 // detect change in selecting an event
 function updateOptionButton(val,btn){
