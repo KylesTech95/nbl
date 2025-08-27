@@ -58,7 +58,7 @@ function focusSeelectElement(string,expectation){
     // console.log(stringMatches)
     if(stringMatches && foundStrinMath){
         let target = navitems.find(s=>new RegExp(string,'g').test(s.textContent))
-        console.log(target)
+        // console.log(target)
         let select = target.nextElementSibling||select_element;
 
         // onclick event

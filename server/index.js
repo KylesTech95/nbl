@@ -63,6 +63,7 @@ app.route('/').get((req,res)=>{
         res.render('index',{
             test:'test',
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            dirspace:false,
         })
     }
 })
@@ -75,8 +76,10 @@ app.route('/event/read/:id').get(async(req,res)=>{
         const findById = await findOne(Event,{_id:id});
         console.log(findById)
         // render ejs
-        res.render('partials/read_event.ejs',{
-            event_data:findById
+        res.render('read_event.ejs',{
+            event_data:findById,
+            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            dirspace:true,
         })
     }
     catch(err){
@@ -123,7 +126,8 @@ app.route('/event/list').get(async(req,res)=>{
         // console.log(events)
         res.render('events.ejs',{
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-            event_data:events // array of events
+            event_data:events, // array of events
+            dirspace:false,
         })
     }
     catch(err){
