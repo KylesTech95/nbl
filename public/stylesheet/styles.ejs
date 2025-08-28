@@ -36,6 +36,9 @@ outline:none;
         justify-content: center;
     }
 
+    .no-pointer{
+        pointer-events:none;
+    }
     .no-display{
         display:none !important;
     }
@@ -143,7 +146,14 @@ outline:none;
     
 
     #main{
-        background:transparent;
+        /* background-image:linear-gradient(transparent 10%, red, transparent 10%); */
+        position: relative;
+        /* background-repeat:no-repeat;
+        background-color:#aeb7cf;
+        background-blend-mode: multiply;
+        background-position: start center;
+        background-size:cover; */
+        /* background-image:url('../media/gif/eric_3_pointer.gif'); */
         height:100vh;
         width:100%;
         display:flex;
@@ -154,17 +164,40 @@ outline:none;
         margin:.75rem 0;
         border-radius: 20px;
     }
+
+
     #main-title{
         font-family: 'basketball' 'bball';
         color:#fff;
     } 
-
+ 
 
     .bg-img{
-        height:100%;
-        width:100%;
+        animation-delay:2s;
+        opacity:0;
+        animation:appearBg .5s ease-in normal;
+        transform:skew(0deg,0deg) scale(1);
+        border-radius: 25px;
+        position:absolute;
+        opacity: .45;
+        background-color: #e50909;
+        background-blend-mode: multiply;
+        box-shadow: 0 .5rem 12px .9px #ffffff;
+        /* left:0; */
+        top:55px;
+        /* border:1rem solid red; */
     }
 
+    @keyframes appearBg {
+        from{
+            opacity:0;
+            transform:skew(30deg,-30deg) scale(.25);
+        }
+        to {
+            opacity:.45;
+            transform:skew(0deg,0deg) scale(1);
+        }
+    }
     #event-container-create,
     #event-container-read{
         background:rgb(255, 255, 255);

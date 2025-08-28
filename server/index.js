@@ -56,6 +56,8 @@ app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+
+
 // routes
 app.route('/').get((req,res)=>{
     // if the path is actually home
@@ -117,7 +119,9 @@ app.route('/event/create').post((req,res)=>{
 
     // console.log(payload)
     createEvent(payload);
-    res.json(payload)
+    
+    res.redirect('/event/list/all')
+    // res.json(payload);
 })
 app.route('/event/list/:parameter').get(async(req,res)=>{
     const paramStatus = ['all','upcoming','completed','canceled'];
@@ -139,12 +143,37 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
 })
 
 
+app.route('/media/:type').get((req,res)=>{
+    const {type} = req.params;
+    let dir, len, payload;
+    
+    switch(true){
+        case type==='gif':
+        dir = readdirSync(path.resolve(__dirname,'../public/media/' + type),'utf-8');
+        len = dir.length;
+        break;
+
+        case type==='png':
+        dir = readdirSync(path.resolve(__dirname,'../public/media/' + type),'utf-8');
+        len = dir.length;
+        break;
+
+        default:
+            console.log(undefined);
+    }
+    // console.log(dir)
+    // console.log(type)
+        payload = {dir:dir,length:len};
+        // return
+        res.json(payload);
+})
+
 app.route('/option/select/:val').get((req,res)=>{
     
     let {val} = req.params;
     // since None is not an option, decrement value by 1
     val--
-    console.log(val);
+    // console.log(val);
     res.json({val:val})
 })
 
