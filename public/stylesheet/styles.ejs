@@ -124,7 +124,7 @@ outline:none;
         /* border:2px solid red; */
         width:50%;
         position:absolute;
-        right:15px;
+        right: 15px;
         top:5px;
         min-height:125px;
         max-height:175px;
@@ -174,15 +174,11 @@ outline:none;
 
     .bg-img{
         animation-delay:2s;
-        opacity:0;
-        animation:appearBg .5s ease-in normal;
-        transform:skew(0deg,0deg) scale(1);
+        opacity:.5;
+        animation:appearBg .75s ease-in normal;
+        transform:translate(0,0px);
         border-radius: 25px;
         position:absolute;
-        opacity: .45;
-        background-color: #e50909;
-        background-blend-mode: multiply;
-        box-shadow: 0 .5rem 12px .9px #ffffff;
         /* left:0; */
         top:55px;
         /* border:1rem solid red; */
@@ -191,11 +187,12 @@ outline:none;
     @keyframes appearBg {
         from{
             opacity:0;
-            transform:skew(30deg,-30deg) scale(.25);
+            transform:translate(0,50px) 
         }
         to {
-            opacity:.45;
-            transform:skew(0deg,0deg) scale(1);
+            /* opacity:.45; */
+            opacity:.5;
+            transform:translate(0,0px)
         }
     }
     #event-container-create,
@@ -244,6 +241,38 @@ outline:none;
         font-size:22pt;
      }
 
+
+     #member-container{
+        width:100%;
+        /* border:2px solid red; */
+        display:flex;
+        padding:0 .5rem;
+     }
+
+     #member-title{
+        text-align: start;
+        padding-left:1rem;
+        background:#000;
+        color:#fff;
+        width:100%;
+     }
+      #login-container:hover,#signup-container:hover{
+        transition: .25s;
+        color:#f00;
+        transform:scale(.98);
+        cursor:pointer;
+      }
+     #login-container,#signup-container{
+        width:50%;
+        transition: .75s;
+        border:2px solid rgb(0, 0, 0);
+        background: #fff;
+        height:200px;
+        flex-direction: column;
+        align-items: center;
+        display:flex;
+        justify-content: center;
+     }
     @media screen and (min-width:1000px) {
         #select-btn:hover{
             background:rgba(255, 0, 0, 0.524);

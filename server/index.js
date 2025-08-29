@@ -65,7 +65,8 @@ app.route('/').get((req,res)=>{
         res.render('index',{
             test:'test',
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
-            dirspace:false // determines ,
+            dirspace:false, // determines
+            authenticated:false,
         })
     }
 })
@@ -82,6 +83,7 @@ app.route('/event/read/:id').get(async(req,res)=>{
             event_data:findById,
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
             dirspace:true, // determines 
+            authenticated:false,
         })
     }
     catch(err){
@@ -134,6 +136,7 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
             event_data:events, // array of events
             dirspace:false, // determines 
+            authenticated:false,
             parameter:!paramStatus.find(p=>new RegExp(p,'ig').test(parameter)) ? undefined : parameter,
         })
     }
@@ -146,7 +149,7 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
 app.route('/media/:type').get((req,res)=>{
     const {type} = req.params;
     let dir, len, payload;
-    
+
     switch(true){
         case type==='gif':
         dir = readdirSync(path.resolve(__dirname,'../public/media/' + type),'utf-8');

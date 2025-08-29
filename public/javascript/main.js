@@ -8,7 +8,7 @@ const maintitle = document.getElementById('main-title')
 const eventtitle = document.getElementById('events-title')
 const eventContainer = document.getElementById('event-container-create')
 const eventlistcontainer = document.getElementById('event-list-container')
-
+const membertitle = document.getElementById('member-title')
 
 // focus on select element
 focusSeelectElement('Options','Options')
@@ -64,7 +64,9 @@ bgInterval = setInterval(()=> {
 // position bg image
 configureBgImage()
 window.onresize = configureBgImage;
+window.onscroll = windowScroll;
 bgImg.onprogress = bgProgress;
+
 function configureBgImage(e){
     const midwidth = document.body.clientWidth / 2;
     if(bgImg.complete){
@@ -251,4 +253,11 @@ function updateOptionOnchange(select){
     // console.log(pathname)
     select.value = target === 'not found' ? 0 : target.value;
     
+}
+function windowScroll(e){
+    let scrollY = window.scrollY;
+    console.log(scrollY)
+    if(scrollY <= 200){
+        membertitle.style.transform = `translate(${scrollY}px,0)`;
+    }
 }
