@@ -57,7 +57,6 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
 
-
 // routes
 app.route('/').get((req,res)=>{
     // if the path is actually home
@@ -67,10 +66,10 @@ app.route('/').get((req,res)=>{
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
             dirspace:false, // determines
             authenticated:false,
+            create:true,
         })
     }
 })
-
 
 app.route('/event/read/:id').get(async(req,res)=>{
     const {id} = req.params;
@@ -84,6 +83,7 @@ app.route('/event/read/:id').get(async(req,res)=>{
             navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
             dirspace:true, // determines 
             authenticated:false,
+            create:false,
         })
     }
     catch(err){
@@ -138,6 +138,7 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
             dirspace:false, // determines 
             authenticated:false,
             parameter:!paramStatus.find(p=>new RegExp(p,'ig').test(parameter)) ? undefined : parameter,
+            create:true,
         })
     }
     catch(err){

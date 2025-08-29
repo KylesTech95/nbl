@@ -48,7 +48,7 @@ const seconds = 7; // NBL STANDARD
 let counter = 0, max = counted.length, bgInterval;
 
 bgImg.src = '../../media/gif/' + counted[Math.floor(Math.random() * max)];
-main.appendChild(bgImg)
+main ? main.appendChild(bgImg) : null;
 // initiate interval
 bgInterval = setInterval(()=> {
     
@@ -65,7 +65,7 @@ bgInterval = setInterval(()=> {
 configureBgImage()
 window.onresize = configureBgImage;
 window.onscroll = windowScroll;
-bgImg.onprogress = bgProgress;
+// bgImg.onprogress = bgProgress;
 
 function configureBgImage(e){
     const midwidth = document.body.clientWidth / 2;
@@ -179,7 +179,7 @@ function loadWindowPlans(){
         main.classList.remove('hidden')
     }
 }
-async function updateOptionFromServer(){
+async function updateOptionFromServer(option={}){
     let val = +select_element.value;
     // console.log(select_element.value)
 
@@ -187,7 +187,7 @@ async function updateOptionFromServer(){
         await fetch('/option/select/'+`${select_element.value}`).then(r=>r.json())
         .then(data => {
             const pathname = window.location.pathname;
-            console.log(data)
+            // console.log(data)
                 switch(true){
                     
                     case data['val'] === 0: // 0
@@ -251,6 +251,10 @@ function updateOptionOnchange(select){
     console.log(target)
     // console.log(optionNames);
     // console.log(pathname)
+
+    if(target === 'not found'){
+        updateOptionFromServer({val:true})
+    }
     select.value = target === 'not found' ? 0 : target.value;
     
 }

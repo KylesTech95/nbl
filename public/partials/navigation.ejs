@@ -11,8 +11,10 @@
                             <option value="1.25">Upcoming Events</option>
                             <option value="1.5">Completed Events</option>
                             <option value="1.75">Canceled Events</option>
-                            <option value="2">Create an Event</option>
-                            <option value="3">Create a Game</option>
+                            <% if(create === true) { %>
+                                 <option value="2">Create an Event</option>
+                                 <option value="3">Create a Game</option>
+                            <%}%>
                         </select>
 
                         <div id="select-btn" class="margin-top-25 hidden">Go</div>

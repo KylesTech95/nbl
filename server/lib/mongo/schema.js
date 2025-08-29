@@ -10,7 +10,9 @@ const playerSchema = new Schema({
     player_name:String, // player name 
     createdAt:String,
     updatedAt:String,
-
+    games:[String], // games involved in,
+    events: [String], // events involved,
+    age: Number
 })
 // stats schema
 const statsSchema = new Schema({
@@ -30,7 +32,7 @@ const teamSchema = new Schema({
     createdAt:String,
     updatedAt:String,
     t_id:Number, // id
-    players:[String], // array of names
+    players:[String], // array of names or ids
     created_date:Date, // data created
 })
 
@@ -38,6 +40,8 @@ const teamSchema = new Schema({
 // Create on 2025-05-13T01:41:05.070Z
 const gameSchema = new Schema({
 g_id:String,
+players: [String],
+admins: [String],
 location:String,
 createdAt:String,
 updatedAt:String,
@@ -58,6 +62,8 @@ const eventSchema = new Schema({
     completed:Boolean,
     rescheduled:Boolean,
     eventDetails:Object,
+    players: [String],
+    admins: [String],
 })
 const reservationSchema = new Schema({
     r_id:String,
@@ -76,7 +82,7 @@ const reservationSchema = new Schema({
 const LeaderboardSchema = new Schema({
 l_id:String,
 leaderboard_type:String,
-top5: Array,
+top5: [String],
 createdAt:String,
 updatedAt:String,
 completed:Boolean,
