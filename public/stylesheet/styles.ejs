@@ -48,6 +48,7 @@ outline:none;
         cursor:none;
     }
 
+    
     .margin-top-25{
         margin-top:.25rem;
 
@@ -156,25 +157,32 @@ outline:none;
     .dimmer-num{
         color:#fff;
         position: absolute;
-        left:-32px;
-        width:22px;
     }
     .dimmer-bottom{
         bottom:.5rem;
+        width:42px;
+        left:-45px;
     }
+
     .dimmer-top{
         top:.5rem;
+        width:22px;
+        left:-26px;
     }
 
     #dimmer{
-        height:50%;
+        height:33%;
         width:1rem;
         background:rgb(0, 0, 0);
         border:.5px solid ghostwhite;
         position:absolute;
         right:25px;
         top:50px;
+        transition:.25s;
         z-index:999;
+    }
+    .transparent-65{
+        opacity:.25;
     }
     #bball-icon-scroll{
         width:inherit;
@@ -273,7 +281,6 @@ outline:none;
         justify-content: center;
         gap:.5rem;
         width:100%;
-        border:2px solid green;
      }
 
      .time-col>div{
@@ -283,10 +290,29 @@ outline:none;
 
      .num-time{
         width:50px;
-        font-size:22pt;
+        font-size:16pt;
+        border-radius: 8px;
+        border-left:none;
+        border-right:none;
+        border-top:none;
+        border-bottom:.5px solid #000;
+        box-shadow: inset 0 -.25rem .75px .5px #333;
+        text-align: center;
+        padding:.5rem 0;
      }
 
+     .container-member,#member-container,#dimmer{
+        animation: appearMember 2s ease-in-out;
+     }
 
+     @keyframes appearMember {
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity:1;
+        }
+     }
      #member-container{
         width:100%;
         /* border:2px solid red; */
@@ -309,6 +335,9 @@ outline:none;
         width:50px;
         z-index:999;
         transform:translate(-17px,0);
+     }
+     .opacity-1{
+        opacity:1 !important;
      }
      #member-title{
         text-align: start;
@@ -346,7 +375,7 @@ outline:none;
         background-color:#33333388;
      }
      #login-container{
-        background-image: url('../media/png/metal_hoop.png');
+        background-image: url('../media/png/dunking.png');
      }
      #signup-container{
         background-image: url('../media/png/signup.png');
@@ -359,6 +388,14 @@ outline:none;
         background-color:#ee900c;
         padding:.5rem;
         border-radius: 12px 0 0 0;
+     }
+
+     #space-extra{
+        width:90%;
+        height:500px;
+        background:rgb(255, 255, 255);
+        z-index: 999;
+        margin-top:.25rem;
      }
     @media screen and (min-width:1000px) {
         #select-btn:hover{

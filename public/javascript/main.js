@@ -73,12 +73,10 @@ window.onscroll = windowScroll;
 // bgImg.onprogress = bgProgress;
 
 function configureBgImage(e){
-    const midwidth = document.body.clientWidth / 2;
     if(bgImg.complete){
-        // bgImg.style.left = midwidth;
-        // bgImg.style.top = document.body.clientHeight / 2;
         fitImageToDevice(bgImg)
     }
+    getPos ? dimmer.style.top = getPos + "px" : undefined;
 }
 
 function bgProgress(e){
@@ -93,12 +91,34 @@ function bgProgress(e){
 /* -------------------------- background image - Dimmer  -------------------------- */
 
 function lockDimmer(e){
-    lockdimmer = true;
+    let target = e.currentTarget;
+
+    if(target && target!==undefined){
+        lockdimmer = true;
+    }
 }
 function moveDimmer(e){
     let mouseY = e.pageY;
-    // position.y = e.pageY;
-    if(lockdimmer!==false){
+    getPos = mouseY
+    if(lockdimmer !== false){
+        // value is the current value you want to scale.
+        // minValue is the minimum possible value in your original data range.
+        // maxValue is the maximum possible value in your original data range.
+        let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
+        let halfBallHeight = dimmer.clientHeight/2;
+        let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
+
+        // if dimmer is within the bar (parent)
+        if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
+            console.log(normalizedValue)
+            bgImg.style.opacity = normalizedValue;
+            dimmer.style.top = pointTarget + "px";
+        }
+    }
+}
+function touchDimmer(e){
+    if(lockdimmer !== false){ // if true
+        let mouseY = e.touches[0].clientY;
         // value is the current value you want to scale.
         // minValue is the minimum possible value in your original data range.
         // maxValue is the maximum possible value in your original data range.
@@ -117,7 +137,7 @@ function moveDimmer(e){
 function releaseDimmer(e){
     lockdimmer = false
 }
-function loadDimmer(bgImg,dimmer,minValue,maxValue){
+function loadDimmer(bgImg,dimmer){
     let target = dimmer;
     let starting = dimmer.parentElement.getBoundingClientRect().y+dimmer.parentElement.clientHeight;
     
@@ -133,11 +153,20 @@ function loadDimmer(bgImg,dimmer,minValue,maxValue){
 // lock onto the dimmer
 if(dimmer){
     dimmer.onmousedown = lockDimmer;
+    dimmer.addEventListener('touchstart',lockDimmer) // touch event
+    dimmer.parentElement.onmouseover = (e) => {
+    }
+    dimmer.parentElement.onmouseleave = (e) => {
+    }
 }
 // move the dimmer
 window.onmousemove = moveDimmer;
+window.addEventListener('touchmove',touchDimmer) // touch event
 // release the dimmer
 window.onmouseup = releaseDimmer;
+window.addEventListener('touchend',releaseDimmer) // touch event
+
+
 
 /* -------------------------- background image - Dimmer  -------------------------- */
 
@@ -149,7 +178,7 @@ function loadWindowPlans(dimmer){
     if(/^\/$/.test(pathname)){
         main.classList.remove('hidden')
     }
-    loadDimmer(bgImg,dimmer,minValue,maxValue)
+    dimmer ? loadDimmer(bgImg,dimmer) : null;
 }
 function fitImageToDevice(imageElement) {
     const deviceWidth = window.innerWidth;
@@ -192,11 +221,11 @@ function updateOptionButton(val,btn){
         bgImg.classList.add('no-display');
         btn.classList.remove('hidden');
         btn.classList.remove('no-pointer');
-        dimmer.parentElement.classList.add('no-display')
+        dimmer ? dimmer.parentElement.classList.add('no-display') : null;
         break;
 
         case val === 0:
-        dimmer.parentElement.classList.remove('no-display')
+        dimmer ? dimmer.parentElement.classList.remove('no-display') : null;
         // console.log(window.location)
         window.location.href = window.location.origin;
         bgImg.src = '../../media/gif/' + counted[Math.floor(Math.round() * counted.length)];
@@ -319,8 +348,12 @@ function updateOptionOnchange(select){
 }
 function windowScroll(e){
     let scrollY = window.scrollY;
-    let increase = .25;
-    console.log(scrollY)
+    if(lockdimmer === true){
+        console.log('dimmer is locked')
+        window.scrollTo(0,document.body.scrollTop - 1)
+    } else {
+        console.log(scrollY)
+    }
     if(scrollY <= 200){
         membertitle.parentElement.style.transform = `translate(${scrollY}px,0)`;
         document.getElementById('bball-icon').style.transform = `rotate(${scrollY}deg)`;

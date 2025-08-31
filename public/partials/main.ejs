@@ -1,8 +1,8 @@
 <main id="main" class="hidden">
     <!-- background preview (GIF) -->
      <div id="dimmer" class="bar-dimmer dimmer-bar">
-        <img src="../media/png/crest.png" class="dimmer-num dimmer-toimg"></img>
-        <img src="../media/png/sun.png" class="dimmer-num dimmer-bottom">1</p>
+        <img src="../media/png/sun.png" class="dimmer-num dimmer-top"></img>
+        <img src="../media/png/sun.png" class="dimmer-num dimmer-bottom crest-big">1</p>
         <img draggable="false" id="bball-icon-scroll" src="../media/png/basketball_icon.png" alt="">
      </div>
     <h2 id="main-title" class="">National Basketball League</h2>
@@ -13,6 +13,12 @@
     <% if (authenticated === false) { %>
         <%- include('./member.ejs') %>
         <% } %>
+
+
+    <!-- white space -->
+     <div id="space-extra">
+
+     </div>
 
 
 </main>
