@@ -9,6 +9,12 @@ const eventtitle = document.getElementById('events-title')
 const eventContainer = document.getElementById('event-container-create')
 const eventlistcontainer = document.getElementById('event-list-container')
 const membertitle = document.getElementById('member-title')
+const dimmer = document.getElementById('bball-icon-scroll');
+let lockdimmer = false;
+let getPos = undefined;
+let position = {x:0,y:undefined}
+let [minValue,maxValue] = [0,1000];
+const bgImg = new Image();
 
 // focus on select element
 focusSeelectElement('Options','Options')
@@ -17,7 +23,7 @@ select_element.onchange = () => updateOptionButton(select_element,select_btn)
 // selection button (options)
 select_btn.onclick = updateOptionFromServer
 // plans for window onload
-window.onload = loadWindowPlans
+window.onload = loadWindowPlans(dimmer)
 window.onchange = updateOptionOnchange(select_element)
 
 window.onkeydown = e => {
@@ -39,7 +45,6 @@ window.onkeydown = e => {
 
 
 /* -------------------------- background images -------------------------- */
-const bgImg = new Image();
 bgImg.classList.add('bg-img');
 bgImg.classList.add('no-pointer');
 
@@ -61,7 +66,6 @@ bgInterval = setInterval(()=> {
     bgImg.src = '../../media/gif/' + counted[counter % max];
 },seconds*1000) // 6 seconds
 
-
 // position bg image
 configureBgImage()
 window.onresize = configureBgImage;
@@ -82,44 +86,71 @@ function bgProgress(e){
     console.log(e)
 }
 
-const dimmer = document.getElementById('bball-icon-scroll');
-let lockdimmer = false;
-let getPos = undefined;
-let position = {x:0,y:undefined}
-let [minRange,maxRange] = [0,1];
+/* -------------------------- background images / resize event  -------------------------- */
+
+
+
+/* -------------------------- background image - Dimmer  -------------------------- */
 
 function lockDimmer(e){
     lockdimmer = true;
 }
 function moveDimmer(e){
     let mouseY = e.pageY;
-
     // position.y = e.pageY;
     if(lockdimmer!==false){
+        // value is the current value you want to scale.
+        // minValue is the minimum possible value in your original data range.
+        // maxValue is the maximum possible value in your original data range.
+        let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
+        let halfBallHeight = dimmer.clientHeight/2;
+        let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
+
+        // if dimmer is within the bar (parent)
         if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
-            console.log(mouseY);
+            console.log(normalizedValue)
+            bgImg.style.opacity = normalizedValue;
+            dimmer.style.top = pointTarget + "px";
         }
     }
 }
 function releaseDimmer(e){
     lockdimmer = false
 }
+function loadDimmer(bgImg,dimmer,minValue,maxValue){
+    let target = dimmer;
+    let starting = dimmer.parentElement.getBoundingClientRect().y+dimmer.parentElement.clientHeight;
+    
+        let normalizedValue = '.6';
+        console.log(normalizedValue)
+        let halfBallHeight = dimmer.clientHeight/2;
+        let pointTarget = starting - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
+        bgImg.style.opacity = normalizedValue;
+        target.style.top = pointTarget + "px";
+}
+
 
 // lock onto the dimmer
-dimmer ? dimmer.onmousedown = lockDimmer : null;
+if(dimmer){
+    dimmer.onmousedown = lockDimmer;
+}
 // move the dimmer
 window.onmousemove = moveDimmer;
 // release the dimmer
 window.onmouseup = releaseDimmer;
 
-/* -------------------------- background images / resize event / dimmer -------------------------- */
-
-
-
+/* -------------------------- background image - Dimmer  -------------------------- */
 
 
 
 /* ---------------------------- functions ----------------------------  */
+function loadWindowPlans(dimmer){
+    const pathname = window.location.pathname;
+    if(/^\/$/.test(pathname)){
+        main.classList.remove('hidden')
+    }
+    loadDimmer(bgImg,dimmer,minValue,maxValue)
+}
 function fitImageToDevice(imageElement) {
     const deviceWidth = window.innerWidth;
     const deviceHeight = window.innerHeight;
@@ -204,12 +235,6 @@ function focusSeelectElement(string,expectation){
             console.log("You clicked on Target")
             select.focus(); // click on select
         }
-    }
-}
-function loadWindowPlans(){
-    const pathname = window.location.pathname;
-    if(/^\/$/.test(pathname)){
-        main.classList.remove('hidden')
     }
 }
 async function updateOptionFromServer(option={}){

@@ -24,7 +24,7 @@ outline:none;
     box-sizing:border-box;
     list-style:none;
     text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'basketball','bball', Arial, Helvetica, sans-serif;
 }
 
     body{
@@ -119,6 +119,13 @@ outline:none;
         opacity: 1;
         transition:.25s;
     }
+    .nav-label:hover{
+        transition:.75s;
+        color:#f00;
+    }
+    .nav-label{
+        transition:.25s;
+    }
     #nav{
         height:100%;
         /* border:2px solid red; */
@@ -145,6 +152,19 @@ outline:none;
         padding:.25rem 0;
     }
     
+
+    .dimmer-num{
+        color:#fff;
+        position: absolute;
+        left:-32px;
+        width:22px;
+    }
+    .dimmer-bottom{
+        bottom:.5rem;
+    }
+    .dimmer-top{
+        top:.5rem;
+    }
 
     #dimmer{
         height:50%;
@@ -211,7 +231,7 @@ outline:none;
         }
         to {
             /* opacity:.45; */
-            opacity:.9;
+            opacity:.6;
             /* transform:translate(0,0px); */
         }
     }
