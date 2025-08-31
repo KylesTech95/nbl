@@ -8,7 +8,6 @@
  const handleMouseOver = e => {
     insideTile = true;
     let customBg = [...e.currentTarget.children][e.currentTarget.children.length-1].children[0];
-    console.log(customBg);
     customBg.classList.add('scale-up')
     // console.log(currentPos)
     // console.log("mouse is over")
@@ -23,7 +22,6 @@
  }
  const handleMouseMove = e => {
     let target = e.currentTarget;
-    console.log(target)
     if(insideTile!==false){
         currentPos.x = e.pageX;
         currentPos.y = e.pageY;
@@ -109,7 +107,7 @@
  let isEven = (x,y) => x % y === 0 ;
 
  for(let i = 0; i < listItems.length; i++){
-   console.log(listItems[i])
+   // console.log(listItems[i])
    let evenIdx = isEven(i,2);
    if(evenIdx){
       listItems[i].style.backgroundColor = light;

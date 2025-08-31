@@ -132,6 +132,7 @@ outline:none;
     #select-option{
         text-align: center;
         min-height:50px;
+        border-radius: 20px;
     }
     #select-option,#nav>ul>li>a{
         width:100%;
@@ -145,6 +146,22 @@ outline:none;
     }
     
 
+    #dimmer{
+        height:50%;
+        width:1rem;
+        background:rgb(0, 0, 0);
+        border:.5px solid ghostwhite;
+        position:absolute;
+        right:25px;
+        top:50px;
+        z-index:999;
+    }
+    #bball-icon-scroll{
+        width:inherit;
+    }
+    #bball-icon-scroll:hover{
+        cursor:pointer;
+    }
     #main{
         /* background-image:linear-gradient(transparent 10%, red, transparent 10%); */
         position: relative;
@@ -154,21 +171,24 @@ outline:none;
         background-position: start center;
         background-size:cover; */
         /* background-image:url('../media/gif/eric_3_pointer.gif'); */
-        height:100vh;
+        height:100%;
         width:100%;
         display:flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        bordeR:2px dotted #fff;
+        /* bordeR:2px dotted #fff; */
         margin:.75rem 0;
         border-radius: 20px;
     }
 
 
+
     #main-title{
         font-family: 'basketball' 'bball';
         color:#fff;
+        font-size:24pt;
+        padding:.5rem 0;
     } 
  
 
@@ -178,21 +198,21 @@ outline:none;
         animation:appearBg .75s ease-in normal;
         transform:translate(0,0px);
         border-radius: 25px 25px 0 0 ;
-        position:absolute;
+        position:relative;
         /* left:0; */
-        top:55px;
+        /* top:55px; */
         /* border:1rem solid red; */
     }
 
     @keyframes appearBg {
         from{
             opacity:0;
-            transform:translate(0,50px);
+            /* transform:translate(0,50px); */
         }
         to {
             /* opacity:.45; */
             opacity:.9;
-            transform:translate(0,0px);
+            /* transform:translate(0,0px); */
         }
     }
     #event-container-create,
@@ -258,17 +278,24 @@ outline:none;
         justify-content: start;
         /* border:2px solid green; */
      }
-
      #bball-icon{
         width:50px;
         margin-right:-1rem;
         z-index:999;
+     }
+     #bball-icon-scroll{
+        position:absolute;
+        left:0;
+        width:50px;
+        z-index:999;
+        transform:translate(-17px,0);
      }
      #member-title{
         text-align: start;
         padding-left:1rem;
         background:#000;
         color:#fff;
+        z-index:999;
      }
       #login-container:hover,#signup-container:hover{
         transition: .25s;
@@ -294,7 +321,7 @@ outline:none;
         position:relative;
         background-repeat: no-repeat;
         background-size:cover;
-        background-position: center;
+        background-position: left center;
         background-blend-mode: multiply;
         background-color:#33333388;
      }

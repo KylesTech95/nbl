@@ -48,7 +48,8 @@ const seconds = 7; // NBL STANDARD
 let counter = 0, max = counted.length, bgInterval;
 
 bgImg.src = '../../media/gif/' + counted[Math.floor(Math.random() * max)];
-main ? main.appendChild(bgImg) : null;
+// main ? main.appendChild(bgImg) : null;
+main ? main.insertBefore(bgImg,document.getElementById('event-container-create')) : null
 // initiate interval
 bgInterval = setInterval(()=> {
     
@@ -81,7 +82,37 @@ function bgProgress(e){
     console.log(e)
 }
 
-/* -------------------------- background images / resize event -------------------------- */
+const dimmer = document.getElementById('bball-icon-scroll');
+let lockdimmer = false;
+let getPos = undefined;
+let position = {x:0,y:undefined}
+let [minRange,maxRange] = [0,1];
+
+function lockDimmer(e){
+    lockdimmer = true;
+}
+function moveDimmer(e){
+    let mouseY = e.pageY;
+
+    // position.y = e.pageY;
+    if(lockdimmer!==false){
+        if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
+            console.log(mouseY);
+        }
+    }
+}
+function releaseDimmer(e){
+    lockdimmer = false
+}
+
+// lock onto the dimmer
+dimmer ? dimmer.onmousedown = lockDimmer : null;
+// move the dimmer
+window.onmousemove = moveDimmer;
+// release the dimmer
+window.onmouseup = releaseDimmer;
+
+/* -------------------------- background images / resize event / dimmer -------------------------- */
 
 
 
@@ -127,13 +158,14 @@ function updateOptionButton(val,btn){
     switch(true){
         case val > 0:
         counter = 0;
-        bgImg.classList.add('no-display')
-        btn.classList.remove('hidden')
-        btn.classList.remove('no-pointer')
+        bgImg.classList.add('no-display');
+        btn.classList.remove('hidden');
+        btn.classList.remove('no-pointer');
+        dimmer.parentElement.classList.add('no-display')
         break;
 
         case val === 0:
-
+        dimmer.parentElement.classList.remove('no-display')
         // console.log(window.location)
         window.location.href = window.location.origin;
         bgImg.src = '../../media/gif/' + counted[Math.floor(Math.round() * counted.length)];
@@ -142,6 +174,7 @@ function updateOptionButton(val,btn){
         if(maintitle)maintitle.classList.remove('hidden')
         if(eventlistcontainer)eventlistcontainer.classList.remove('no-display')
         if(eventContainer)eventContainer.classList.add('hidden')
+        if(eventContainer)eventContainer.classList.add('no-display')
         if(eventtitle){
             let pathsplit = window.location.pathname.split`/`
             let pathname = pathsplit[pathsplit.length-1];
@@ -204,6 +237,7 @@ async function updateOptionFromServer(option={}){
                     if(eventlistcontainer)eventlistcontainer.classList.add('no-display')
                     main.classList.remove('hidden')
                     eventContainer.classList.remove('hidden')
+                    eventContainer.classList.remove('no-display')
                     break;
                     case data['val'] === .25: // 0
                     window.location.href = window.location.origin + '/event/list/upcoming';
