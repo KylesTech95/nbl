@@ -1,5 +1,5 @@
- console.log('hello events')
  const tiles = [...document.querySelectorAll('.event-list-item')];
+
 
 
  /* ----------------- handle tile evenets ----------------- */
@@ -26,7 +26,7 @@
     }
  }
  const handleClick = e => {
-    let targetLink = [...e.currentTarget.children][e.currentTarget.children.length-1].textContent
+    let targetLink = [...e.currentTarget.children][e.currentTarget.children.length-2].textContent
     console.log(targetLink)
        window.location.href = window.location.origin + '/event/read/' + targetLink
  }
@@ -35,7 +35,21 @@
  // move over tiles
  let tt;
  for(let i = 0; i < tiles.length; i++) {
+   
     if(tiles[i]){
+       let customBg = `<div class="no-display" id="custom-bg-wrapper">
+        <div id="tile-bg-container">
+            <div class="circle translate-left"></div>
+            <div class="line line-vert"></div>
+            <div class="line line-horiz absolute"></div>
+            <div class="circle translate-right"></div>
+        </div>
+    </div>`
+      let mydiv = document.createElement('div')
+      mydiv.innerHTML = customBg;
+
+      customBg = mydiv.children[0]
+
         tt = tiles[i];
         // tt.onmouseover = handleMouseOver;
         // tt.onmouseleave = handleMouseLeave;
@@ -68,8 +82,8 @@
         let timeNum = convertNumToDate(pullNum,'iso-time')
         timeNum = timeNum.split` `[0];
 
-        console.log(dateNum)
-        console.log(timeNum)
+      //   console.log(dateNum)
+      //   console.log(timeNum)
 
         // plug in variables
         tt.children[0].textContent = dateNum;
@@ -77,5 +91,26 @@
         newP.classList.add('bolder')
         newP.textContent = timeNum;
         tt.insertBefore(newP,tt.children[0])
+        tt.appendChild(customBg);
+        customBg.classList.remove('no-display')
     }
  }
+
+ /* ----------------- read evenets ----------------- */
+
+ const listItems = document.querySelectorAll('#event-nomenclature-container > div');
+ let [light,dark] = ['silver','lightBlue'];
+ let isEven = (x,y) => x % y === 0 ;
+
+ for(let i = 0; i < listItems.length; i++){
+   console.log(listItems[i])
+   let evenIdx = isEven(i,2);
+   if(evenIdx){
+      listItems[i].style.backgroundColor = light;
+   } else {
+      listItems[i].style.backgroundColor = dark;
+   }
+ }
+
+ /* ----------------- read evenets ----------------- */
+

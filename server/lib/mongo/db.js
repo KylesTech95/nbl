@@ -79,6 +79,7 @@ function createEvent(payload){
 // updateOne(Player,{player_name:'Mark'},{$set: {p_id:102}})
 // saveData(player1) // save player
 
+// updateOne(Event, {_id:'68ae475fb91a9f93cc621cbe'},{completed:true});
 // update many instances
 // updateMany(Player,{p_id:{$gte: 20}},{$set: {player_name:'name_updated'}})
 // updateMany(Event,{description:'golfing with friends'},{canceled:true})

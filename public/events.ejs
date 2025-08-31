@@ -13,7 +13,15 @@
 
 
 <body>
-    
+    <!-- basketball bg -->
+    <!-- <div class="no-display" id="custom-bg-wrapper">
+        <div id="tile-bg-container">
+            <div class="circle translate-left"></div>
+            <div class="line line-vert"></div>
+            <div class="line line-horiz absolute"></div>
+            <div class="circle translate-right"></div>
+        </div>
+    </div> -->
     <!-- header -->
     <%- include('./partials/header.ejs') %>
 
@@ -28,18 +36,18 @@
 
            <% if(parameter=='all') { %>
                 <li class="event-list-item">
-                <p class="no-pointer">(Date: <%= event_data[i].createdAt %>)</p>
-                <p class="no-pointer event-list-para bolder caps"><%= event_data[i].name %></p>
-                <p class="no-pointer"><%= event_data[i]._id%></p>
+                <p class="no-pointer bolder">(Date: <%= event_data[i].createdAt %>)</p>
+                <p class="no-pointer bolder event-list-para bolder caps"><%= event_data[i].name %></p>
+                <p class="no-pointer bolder"><%= event_data[i]._id%></p>
             </li>
             <% } %>
 
            <% if(parameter=='upcoming') { %>
             <% if(event_data[i].canceled == false && event_data[i].completed == false) {%>
                 <li class="event-list-item">
-                <p class="no-pointer">(Date: <%= event_data[i].createdAt %>)</p>
-                <p class="no-pointer event-list-para bolder caps"><%= event_data[i].name %></p>
-                <p class="no-pointer"><%= event_data[i]._id%></p>
+                <p class="no-pointer bolder">(Date: <%= event_data[i].createdAt %>)</p>
+                <p class="no-pointer bolder event-list-para bolder caps"><%= event_data[i].name %></p>
+                <p class="no-pointer bolder"><%= event_data[i]._id%></p>
                 </li>
             <% } %>
                 
@@ -48,9 +56,9 @@
            <% if(parameter=='canceled') { %>
                 <% if(event_data[i].canceled == true) {%>
                 <li class="event-list-item">
-                <p class="no-pointer">(Date: <%= event_data[i].createdAt %>)</p>
-                <p class="no-pointer event-list-para bolder caps"><%= event_data[i].name %></p>
-                <p class="no-pointer"><%= event_data[i]._id%></p>
+                <p class="no-pointer bolder">(Date: <%= event_data[i].createdAt %>)</p>
+                <p class="no-pointer bolder event-list-para bolder caps"><%= event_data[i].name %></p>
+                <p class="no-pointer bolder"><%= event_data[i]._id%></p>
                 </li>
                 <% } %>
             <% } %>
@@ -58,9 +66,9 @@
            <% if(parameter=='completed') { %>
                 <% if(event_data[i].completed == true) {%>
                 <li class="event-list-item">
-                <p class="no-pointer">(Date: <%= event_data[i].createdAt %>)</p>
-                <p class="no-pointer event-list-para bolder caps"><%= event_data[i].name %></p>
-                <p class="no-pointer"><%= event_data[i]._id%></p>
+                <p class="no-pointer bolder">(Date: <%= event_data[i].createdAt %>)</p>
+                <p class="no-pointer bolder event-list-para bolder caps"><%= event_data[i].name %></p>
+                <p class="no-pointer bolder"><%= event_data[i]._id%></p>
                 </li>
                 <% } %>
             <% } %>
