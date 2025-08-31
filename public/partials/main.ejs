@@ -1,12 +1,12 @@
 <main id="main" class="hidden">
     <!-- background preview (GIF) -->
      
-    <h2 id="main-title" class="">Home Page</h2>
+    <h2 id="main-title" class="">National Basketball League</h2>
 
     <%- include('./create_event.ejs') %>
+ 
 
-
-    <% if (authenticated === true) { %>
+    <% if (authenticated === false) { %>
         <%- include('./member.ejs') %>
         <% } %>
 

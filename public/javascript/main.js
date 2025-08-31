@@ -260,8 +260,10 @@ function updateOptionOnchange(select){
 }
 function windowScroll(e){
     let scrollY = window.scrollY;
+    let increase = .25;
     console.log(scrollY)
     if(scrollY <= 200){
-        membertitle.style.transform = `translate(${scrollY}px,0)`;
+        membertitle.parentElement.style.transform = `translate(${scrollY}px,0)`;
+        document.getElementById('bball-icon').style.transform = `rotate(${scrollY}deg)`;
     }
 }

@@ -7,10 +7,16 @@
  let insideTile = false;
  const handleMouseOver = e => {
     insideTile = true;
+    let customBg = [...e.currentTarget.children][e.currentTarget.children.length-1].children[0];
+    console.log(customBg);
+    customBg.classList.add('scale-up')
     // console.log(currentPos)
     // console.log("mouse is over")
+
  }
  const handleMouseLeave = e => {
+    let customBg = [...e.currentTarget.children][e.currentTarget.children.length-1].children[0];
+    customBg.classList.remove('scale-up')
     insideTile = false;
     // console.log(e.currentTarget);
     // console.log("mouse is out")
@@ -51,8 +57,8 @@
       customBg = mydiv.children[0]
 
         tt = tiles[i];
-        // tt.onmouseover = handleMouseOver;
-        // tt.onmouseleave = handleMouseLeave;
+        tt.onmouseover = handleMouseOver;
+        tt.onmouseleave = handleMouseLeave;
         // tt.onmousemove = handleMouseMove;
 
         // click on tile
