@@ -1,11 +1,13 @@
 {
     "Home":{
-        "open":false
+        "open":true,
+        "href":"/"
     },
     "Options":{
         "open":true
     },
     "Contact":{
-        "open":false
+        "open":true,
+        "href":"/contact"
     }
 }

@@ -18,8 +18,10 @@
                         </select>
 
                         <div id="select-btn" class="margin-top-25 hidden">Go</div>
-                    <% } else { %>
-                        <p> <%= link %></p>
+                    <% } if(link==='Home'){ %>
+                        <a href="/"><%= link %></a>
+                        <% } if(link==='Contact'){ %>
+                        <a href="/contact"><%= link %></a>
                         <% } %>
                         
                 </a>
