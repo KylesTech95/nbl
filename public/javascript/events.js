@@ -116,5 +116,58 @@
    }
  }
 
+
+//  scroll through events with left/right arrow
+const arrows = document.querySelectorAll('.arrow-img');
+for(let i = 0; i < arrows.length; i++){
+         arrows[i].onclick = handleArrowClick
+}
+
+ async function handleArrowClick(e){
+   // list tiles
+   let getevents = await fetch('../../events/all').then(r=>r.json()).then(d=>d['data']);
+   // split href
+   let splitRef = window.location.href.split`/`
+   // get id from href
+   let getID = splitRef[splitRef.length-1];
+   
+   // console.log(getevents)
+   // console.log(getID)
+
+   // find index within the list
+   let idx
+   let findObj = getevents.find(obj => obj._id === getID);
+   if(findObj) idx = getevents.indexOf(findObj);
+   // console.log(idx)
+
+   let left = 'left', right = 'right';
+   let classlist = e.target.classList
+
+   let isleft = classlist.contains(`img-${left}`)
+   let isright = classlist.contains(`img-${right}`)
+
+   // console.log(isleft)
+   // console.log(isright)
+
+   if(idx >= 0 && idx < getevents.length){
+      switch(true){
+      case isleft:
+         idx -= 1;
+      break;
+
+      case isright:
+         idx += 1;
+      break;
+
+      default:
+         console.log(undefined);
+      break;
+   }
+   // console.log("Updated Index:")
+   // console.log(idx)
+   let getUpdatedId = getevents[idx]._id;
+   window.location.href = window.location.origin + "/event/read/" + getUpdatedId;
+   }
+}
  /* ----------------- read evenets ----------------- */
 

@@ -3,7 +3,6 @@
         text-decoration:underline;
         font-size:12pt;
         font-weight:bold;
-
     }
     .event-label-name{
         font-size:16pt !important;
@@ -28,6 +27,39 @@
     }
     #event-nomenclature-container>div{
         padding:0 .25rem;
+    }
+
+    #arrow-container{
+        width:100%;
+        height:100px;
+        /* background:red; */
+        /* border:2px solid white; */
+        display:flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .arrow-img:hover{
+        cursor:pointer;
+    }
+    .arrow-img:active{
+        background:red;
+    }
+    .img-left:hover{
+        transform:scale(.9) rotate(180deg);
+    }
+    .img-right:hover{
+        transform:scale(.9);
+    }
+    .arrow-img{
+        transition:.25s;
+        width:75px;
+        height:75px;
+    }
+    .img-left{
+        transform:rotate(180deg);
+    }
+    .img-right{
+        /* transform:rotate(90deg); */
     }
 
 </style>

@@ -145,6 +145,17 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
         throw new Error(err)
     }
 })
+app.route('/events/all').get(async(req,res)=>{
+    
+    try{
+        // get list of events from db
+        const events = await findAll(Event); // array of events
+        res.json({data:events})
+    }
+    catch(err){
+        throw new Error(err)
+    }
+})
 
 
 app.route('/media/:type').get((req,res)=>{

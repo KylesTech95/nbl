@@ -346,7 +346,7 @@ function updateOptionOnchange(select){
     select.value = target === 'not found' ? 0 : target.value;
     
 }
-function windowScroll(e){
+function windowScroll(){
     let scrollY = window.scrollY;
     if(lockdimmer === true){
         console.log('dimmer is locked')
@@ -354,7 +354,7 @@ function windowScroll(e){
     } else {
         console.log(scrollY)
     }
-    if(scrollY <= 200){
+    if(scrollY <= document.body.clientHeight){
         membertitle.parentElement.style.transform = `translate(${scrollY}px,0)`;
         document.getElementById('bball-icon').style.transform = `rotate(${scrollY}deg)`;
     }
