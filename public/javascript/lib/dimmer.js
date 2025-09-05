@@ -1,6 +1,6 @@
 export let lockdimmer = false;
 const dimmer = document.getElementById('bball-icon-scroll');
-
+const bgImg = document.getElementById('bg-img')
 /* -------------------------- background image - Dimmer  -------------------------- */
 export function lockDimmer(e){
     let target = e.currentTarget;
@@ -10,22 +10,23 @@ export function lockDimmer(e){
     }
 }
 export function moveDimmer(e){
-    let mouseY = e.pageY;
-    if(lockdimmer !== false){
-        // value is the current value you want to scale.
-        // minValue is the minimum possible value in your original data range.
-        // maxValue is the maximum possible value in your original data range.
-        // let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
-        // let halfBallHeight = dimmer.clientHeight/2;
-        // let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
+    // let mouseY = e.pageY;
+    // if(lockdimmer !== false){
+    //     let minValue = 0, maxValue = 1000
+    //     // value is the current value you want to scale.
+    //     // minValue is the minimum possible value in your original data range.
+    //     // maxValue is the maximum possible value in your original data range.
+    //     let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
+    //     let halfBallHeight = dimmer.clientHeight/2;
+    //     let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
 
-        // // if dimmer is within the bar (parent)
-        // if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
-        //     console.log(normalizedValue)
-        //     bgImg.style.opacity = normalizedValue;
-        //     dimmer.style.top = pointTarget + "px";
-        // }
-    }
+    //     // if dimmer is within the bar (parent)
+    //     if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
+    //         console.log(normalizedValue)
+    //         bgImg.style.opacity = normalizedValue;
+    //         dimmer.style.top = pointTarget + "px";
+    //     }
+    // }
 }
 export function touchDimmer(e){
     if(lockdimmer !== false){ // if true
@@ -57,7 +58,13 @@ export function loadDimmer(bgImg,dimmer){
         let halfBallHeight = dimmer.clientHeight/2;
         let pointTarget = starting - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
         bgImg.style.opacity = normalizedValue;
-        target.style.top = pointTarget + "px";
+        // target.style.top = pointTarget + "px";
+}
+
+export function resizeDimmer(dimmer){
+    let percentage = '50%';
+    dimmer.parentElement.style.height = percentage;
+    console.log(percentage)
 }
 
 // lock onto the dimmer

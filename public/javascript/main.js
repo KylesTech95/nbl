@@ -1,6 +1,7 @@
 /* -------------------------- variables/imports -------------------------- */
 import loadWindowPlans from "./lib/loadWindowPlans.js";
 import { lockdimmer } from './lib/dimmer.js'
+import { resizeDimmer } from "./lib/dimmer.js";
 const navitems = [...document.querySelectorAll('#nav>ul>li>a>p')];
 const header = document.getElementById('header-main')
 const main = document.getElementById('main')
@@ -13,6 +14,8 @@ const memberMega = document.getElementById('memeber-mega-container')
 let getPos = undefined;
 const bgImg = document.querySelector('.bg-img')
 const scrollball = document.getElementById('bball-icon');
+const dimmer = document.getElementById('bball-icon-scroll');
+
 
 /* -------------------------- variables/imports -------------------------- */
 
@@ -37,15 +40,17 @@ bgInterval = setInterval(()=> {
 },seconds*1000) // 6 seconds
 
 // position bg image
-configureBgImage()
-window.onresize = configureBgImage;
+windowResize()
+window.onresize = windowResize;
 window.onscroll = windowScroll;
 // bgImg.onprogress = bgProgress;
 
-function configureBgImage(e){
+function windowResize(e){
     if(bgImg.complete){
         fitImageToDevice(bgImg)
     }
+    resizeDimmer(dimmer)
+
     getPos ? dimmer.style.top = getPos + "px" : undefined;
 }
 /* -------------------------- background images / resize event  -------------------------- */
