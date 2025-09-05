@@ -15,7 +15,12 @@ const dest = { // destination
     reservation:'reservation',
     game:'game'
 }
-const navigation = require("./lib/common/navigation.json")
+const navigation = {
+    common:require("./lib/common/navigation.json"),
+    admin:require("./lib/admin/navigation.json")
+}
+
+const auth = require('./lib/routes/auth.js')
 
 /* -------------------------------------------------- */
 // template details 
@@ -55,24 +60,24 @@ app.use(express.static(path.join(__dirname,'..','public')))
 app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-
+app.use('/auth',auth)
 
 // routes
 app.route('/').get((req,res)=>{
-    // if the path is actually home
     if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
-            test:'test',
-            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Games|Events)/g.test(str) && navigation['common'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
-            create:true,
         })
+    } else {
+        unauthoized;
     }
 })
+app.route('/:type/event/read/:id').get(async(req,res)=>{
+    let {type,id} = req.params;
+    if(!type||type===undefined)type='common'
 
-app.route('/event/read/:id').get(async(req,res)=>{
-    const {id} = req.params;
 
     try{
         const findById = await findOne(Event,{_id:id});
@@ -80,7 +85,7 @@ app.route('/event/read/:id').get(async(req,res)=>{
         // render ejs
         res.render('partials/read_event.ejs',{
             event_data:findById,
-            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            navlinks:Object.keys(navigation[type]).filter(str => navigation[type][str]['open']),
             dirspace:true, // determines 
             authenticated:false,
             create:false,
@@ -125,15 +130,16 @@ app.route('/event/create').post((req,res)=>{
     res.redirect('/event/list/all')
     // res.json(payload);
 })
-app.route('/event/list/:parameter').get(async(req,res)=>{
+app.route('/:type/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
     const paramStatus = ['all','upcoming','completed','canceled'];
-    const {parameter} = req.params;
+    let {type,parameter} = req.params;
+    if(!type||type===undefined)type='common'
     try{
         // get list of events from db
         const events = await findAll(Event); // array of events
         // console.log(events)
         res.render('events.ejs',{
-            navlinks:Object.keys(navigation).filter(str => navigation[str]['open']),
+            navlinks:Object.keys(navigation[type]).filter(str => !/(Login|Signup|Events)/g.test(str) && navigation[type][str]['open']),
             event_data:events, // array of events
             dirspace:false, // determines 
             authenticated:false,
@@ -145,7 +151,7 @@ app.route('/event/list/:parameter').get(async(req,res)=>{
         throw new Error(err)
     }
 })
-app.route('/events/all').get(async(req,res)=>{
+app.route('/events/all').get(isAuthenticated, async(req,res)=>{
     
     try{
         // get list of events from db
@@ -156,7 +162,6 @@ app.route('/events/all').get(async(req,res)=>{
         throw new Error(err)
     }
 })
-
 
 app.route('/media/:type').get((req,res)=>{
     const {type} = req.params;
@@ -217,3 +222,38 @@ app.route('/option/select/:val').get((req,res)=>{
 app.listen((port),()=>{
     console.log('listening on port: ' + port)
 })
+
+app.use(pageNotFound)
+
+
+// check if authenticated
+function isAuthenticated(req,res,next){
+    
+    // method
+    // if(req.authenticated){
+    if(req.authenticated!==undefined && req.authenticated !== false){
+    // if(1+1===3){
+        console.log("auth status:")
+        console.log(req.authenticated)
+        next();
+    } else {
+        unauthoized(req,res)
+    }
+}
+function isNotAuthenticated(req,res,next){
+    // method
+    if(!req.authenticated){
+        console.log("auth status:")
+        console.log(req.authenticated)
+        next();
+    } else {
+        // redirect user back to home
+        res.redirect('/')
+    }
+}
+function pageNotFound(req,res){
+    res.status(404).send('Page not found')
+}
+function unauthoized(req,res){
+    res.status(403).send('Forbidden')
+}

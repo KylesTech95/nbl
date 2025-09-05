@@ -1,0 +1,56 @@
+const express = require('express')
+const router = express.Router();
+const navigation = {
+    common:require("../common/navigation.json"),
+    admin:require("../admin/navigation.json")
+}
+
+
+const timelog = (req,res,next) => {
+    let current_time = new Date(Date.now()).toString();
+    console.log(current_time)
+    next();
+}
+// router.use(timelog)
+
+
+router.route('/login').get((req,res)=>{
+    if(/^\/login$/.test(req.path)){
+        res.render('login',{
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Login)/g.test(str) && navigation['common'][str]['open']),
+            dirspace:false, // determines
+            authenticated:false,
+            title:'Login',
+            admin:false,
+        })
+    } 
+})
+router.route('/signup').get((req,res)=>{
+    if(/^\/signup$/.test(req.path)){
+        res.render('signup',{
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Signup)/g.test(str) && navigation['common'][str]['open']),
+            dirspace:false, // determines
+            authenticated:false,
+            title:'Signup',
+            admin:false,
+
+        })
+    } 
+})
+
+router.route('/admin/login').get((req,res)=>{
+    if(/^\/admin\/login$/.test(req.path)){
+        res.render('login',{
+            navlinks:Object.keys(navigation['admin']).filter(str => !/(Events|Games)/g.test(str) && navigation['admin'][str]['open']),
+            dirspace:false, // determines
+            authenticated:false,
+            title:'Login',
+            admin:true,
+        })
+    } 
+})
+
+
+
+
+module.exports = router

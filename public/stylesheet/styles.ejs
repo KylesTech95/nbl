@@ -8,7 +8,9 @@
     font-family: 'bball';
     src: url('../../fonts/Basketball.otf'); /* accessing same font from alternate directory*/
 }
-
+html{
+       scroll-behavior: smooth;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -31,6 +33,7 @@ a{
 }
 
     body{
+        height: 100%;
         /* background:silver; */
         background:#000;
         display:flex;
@@ -132,13 +135,28 @@ a{
     }
     #nav{
         height:100%;
+        z-index:998;
         /* border:2px solid red; */
-        width:50%;
+        width:75%;
         position:absolute;
         right: 15px;
         top:5px;
         min-height:125px;
         max-height:175px;
+        display:flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: end;
+        padding-bottom:.5rem;
+    }
+       #nav>ul{
+        width:75%;
+        /* border:2px solid green; */
+        display:flex;
+        justify-content: end;
+        align-items: end;
+        gap:2rem;
+        transition: .25s;
     }
     #select-option{
         text-align: center;
@@ -156,14 +174,12 @@ a{
         padding:.25rem 0;
     }
 
-    #nav>ul{
-        /* border:2px solid green; */
-        display:flex;
-        justify-content: center;
-        align-items: end;
-        gap:2rem;
+    #title-container{
+        z-index:999;
     }
-
+    #title-container:hover{
+        cursor:pointer;
+    }
     .dimmer-num{
         color:#fff;
         position: absolute;
@@ -221,6 +237,10 @@ a{
     }
 
 
+    #auth-list-container{
+        border:3px solid green;
+        display:flex;
+    }
 
     #main-title{
         font-family: 'basketball' 'bball';
@@ -254,7 +274,8 @@ a{
         }
     }
     #event-container-create,
-    #event-container-read{
+    #event-container-read,
+    #game-container-create{
         background:rgb(255, 255, 255);
         height:100%;
         width:100%;
@@ -266,13 +287,15 @@ a{
         justify-content: center;
         padding:.5rem;
     }
-    #event-container-create{
+    #event-container-create,
+    #game-container-create{
 
     }
     #event-container-read{
     }
 
-    #event-container-create > form {
+    #event-container-create > form,
+    #game-container-create>form {
         height:100%;
         width:inherit;
         display:flex;
@@ -281,7 +304,8 @@ a{
         justify-content: space-evenly;
     }
 
-     #event-container-create > form > div {
+     #event-container-create > form > div,
+     #game-container-create > form > div {
         display:flex;
         flex-direction: column;
      }
@@ -419,10 +443,38 @@ a{
      }
 
 
+     #footer{
+        /* position:absolute;
+        left:0;
+        bottom:0; */
+        height:150px;
+        width:100%;
+        background-image:linear-gradient(180deg,#000000 25%,#eb9408 75%);
+        animation:loadOp 1.75s ease-in normal;
+     }
+
+     @keyframes loadOp {
+        from{
+            opacity:0;
+        }
+        to{
+            opaicty:1;
+        }
+        
+     }
     @media screen and (min-width:1000px) {
         #select-btn:hover{
             background:rgba(255, 0, 0, 0.524);
             cursor:pointer;
         }
+    }
+    @media screen and (max-width:670px) {
+        #nav>ul{
+            transition: .5s;
+            display:Flex;
+            flex-direction:column;
+            gap:.25rem;
+        }
+
     }
 </style>

@@ -1,7 +1,7 @@
-// console.log("hello NBL") // vstd
+/* -------------------------- variables/imports -------------------------- */
+import loadWindowPlans from "./lib/loadWindowPlans.js";
+import { lockdimmer } from './lib/dimmer.js'
 const navitems = [...document.querySelectorAll('#nav>ul>li>a>p')];
-const select_element = document.getElementById('select-option');
-const select_btn = document.getElementById('select-btn');
 const header = document.getElementById('header-main')
 const main = document.getElementById('main')
 const maintitle = document.getElementById('main-title')
@@ -9,39 +9,17 @@ const eventtitle = document.getElementById('events-title')
 const eventContainer = document.getElementById('event-container-create')
 const eventlistcontainer = document.getElementById('event-list-container')
 const membertitle = document.getElementById('member-title')
-const dimmer = document.getElementById('bball-icon-scroll');
-let lockdimmer = false;
 let getPos = undefined;
-let position = {x:0,y:undefined}
-let [minValue,maxValue] = [0,1000];
 const bgImg = new Image();
 
-// focus on select element
-focusSeelectElement('Options','Options')
-// update option button
-select_element.onchange = () => updateOptionButton(select_element,select_btn)
-// selection button (options)
-select_btn.onclick = updateOptionFromServer
+
+/* -------------------------- variables/imports -------------------------- */
+
+
+/* ------------------------ Window Events ------------------------ */
 // plans for window onload
-window.onload = loadWindowPlans(dimmer)
-window.onchange = updateOptionOnchange(select_element)
-
-window.onkeydown = e => {
-    // let selectoptions = [...select_element.children];
-    // let pathname = window.location.pathname;
-    // let splitpathname = pathname.split`/`;
-    // let getpath = splitpathname[splitpathname.length-1];
-    // let curroption = selectoptions.find(x=>new RegExp(getpath,'ig').test(x.textContent)),
-    // currIndex = selectoptions.indexOf(curroption);
-
-    if((!select_btn.classList.contains('no-display') && +select_element.value > 0)){
-        if(e.key === 'Enter'){
-            // console.log('it works!')
-            select_btn.click()
-    }
-    }
-}
-
+window.onload = loadWindowPlans(main,bgImg,dimmer)
+/* ------------------------ Window Events ------------------------ */
 
 
 /* -------------------------- background images -------------------------- */
@@ -78,108 +56,12 @@ function configureBgImage(e){
     }
     getPos ? dimmer.style.top = getPos + "px" : undefined;
 }
-
-function bgProgress(e){
-    console.log(e.currentTarget);
-    console.log(e)
-}
-
 /* -------------------------- background images / resize event  -------------------------- */
 
 
 
-/* -------------------------- background image - Dimmer  -------------------------- */
-
-function lockDimmer(e){
-    let target = e.currentTarget;
-
-    if(target && target!==undefined){
-        lockdimmer = true;
-    }
-}
-function moveDimmer(e){
-    let mouseY = e.pageY;
-    getPos = mouseY
-    if(lockdimmer !== false){
-        // value is the current value you want to scale.
-        // minValue is the minimum possible value in your original data range.
-        // maxValue is the maximum possible value in your original data range.
-        let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
-        let halfBallHeight = dimmer.clientHeight/2;
-        let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
-
-        // if dimmer is within the bar (parent)
-        if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
-            console.log(normalizedValue)
-            bgImg.style.opacity = normalizedValue;
-            dimmer.style.top = pointTarget + "px";
-        }
-    }
-}
-function touchDimmer(e){
-    if(lockdimmer !== false){ // if true
-        let mouseY = e.touches[0].clientY;
-        // value is the current value you want to scale.
-        // minValue is the minimum possible value in your original data range.
-        // maxValue is the maximum possible value in your original data range.
-        let normalizedValue = ((mouseY*1.9) - minValue) / (maxValue - minValue).toFixed(2);
-        let halfBallHeight = dimmer.clientHeight/2;
-        let pointTarget = mouseY - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
-
-        // if dimmer is within the bar (parent)
-        if(mouseY > dimmer.parentElement.getBoundingClientRect().y && mouseY < (dimmer.parentElement.getBoundingClientRect().y + dimmer.parentElement.clientHeight) ){
-            console.log(normalizedValue)
-            bgImg.style.opacity = normalizedValue;
-            dimmer.style.top = pointTarget + "px";
-        }
-    }
-}
-function releaseDimmer(e){
-    lockdimmer = false
-}
-function loadDimmer(bgImg,dimmer){
-    let target = dimmer;
-    let starting = dimmer.parentElement.getBoundingClientRect().y+dimmer.parentElement.clientHeight;
-    
-        let normalizedValue = '.6';
-        console.log(normalizedValue)
-        let halfBallHeight = dimmer.clientHeight/2;
-        let pointTarget = starting - dimmer.parentElement.getBoundingClientRect().y - halfBallHeight;
-        bgImg.style.opacity = normalizedValue;
-        target.style.top = pointTarget + "px";
-}
-
-
-// lock onto the dimmer
-if(dimmer){
-    dimmer.onmousedown = lockDimmer;
-    dimmer.addEventListener('touchstart',lockDimmer) // touch event
-    dimmer.parentElement.onmouseover = (e) => {
-    }
-    dimmer.parentElement.onmouseleave = (e) => {
-    }
-}
-// move the dimmer
-window.onmousemove = moveDimmer;
-window.addEventListener('touchmove',touchDimmer) // touch event
-// release the dimmer
-window.onmouseup = releaseDimmer;
-window.addEventListener('touchend',releaseDimmer) // touch event
-
-
-
-/* -------------------------- background image - Dimmer  -------------------------- */
-
-
-
 /* ---------------------------- functions ----------------------------  */
-function loadWindowPlans(dimmer){
-    const pathname = window.location.pathname;
-    if(/^\/$/.test(pathname)){
-        main.classList.remove('hidden')
-    }
-    dimmer ? loadDimmer(bgImg,dimmer) : null;
-}
+
 function fitImageToDevice(imageElement) {
     const deviceWidth = window.innerWidth;
     const deviceHeight = window.innerHeight;
@@ -211,151 +93,15 @@ function fitImageToDevice(imageElement) {
     imageElement.style.height = `${newHeight}px`;
     imageElement.style.objectFit = 'contain'; // Ensures the image fits within the new dimensions without cropping
 }
-function updateOptionButton(val,btn){
-    const pathname = window.location.pathname;
-    val = +val.value;
-    // console.log(val)
-    switch(true){
-        case val > 0:
-        counter = 0;
-        bgImg.classList.add('no-display');
-        btn.classList.remove('hidden');
-        btn.classList.remove('no-pointer');
-        dimmer ? dimmer.parentElement.classList.add('no-display') : null;
-        break;
-
-        case val === 0:
-        dimmer ? dimmer.parentElement.classList.remove('no-display') : null;
-        // console.log(window.location)
-        window.location.href = window.location.origin;
-        bgImg.src = '../../media/gif/' + counted[Math.floor(Math.round() * counted.length)];
-        bgImg.classList.remove('no-display')
-        if(!/^\/$/.test(pathname))main.classList.add('hidden')
-        if(maintitle)maintitle.classList.remove('hidden')
-        if(eventlistcontainer)eventlistcontainer.classList.remove('no-display')
-        if(eventContainer)eventContainer.classList.add('hidden')
-        if(eventContainer)eventContainer.classList.add('no-display')
-        if(eventtitle){
-            let pathsplit = window.location.pathname.split`/`
-            let pathname = pathsplit[pathsplit.length-1];
-            eventtitle.textContent = pathname[0]+pathname.slice(1,pathname.length) + " Events"
-        }
-        btn.classList.add('hidden')
-        btn.classList.add('no-pointer')
-        break;
-
-        default:
-            console.log(undefined);
-        break
-    }
-    return;
-}
-function focusSeelectElement(string,expectation){
-    const stringMatches = new RegExp(string,'g').test(expectation);
-    const foundStrinMath = navitems.find(s=>new RegExp(string,'g').test(s.textContent)).textContent.replace(/^\s/,'')
-    // console.log(stringMatches)
-    if(stringMatches && foundStrinMath){
-        let target = navitems.find(s=>new RegExp(string,'g').test(s.textContent))
-        // console.log(target)
-        let select = target.nextElementSibling||select_element;
-
-        // onclick event
-        target.onclick = () => {
-            console.log("You clicked on Target")
-            select.focus(); // click on select
-        }
-    }
-}
-async function updateOptionFromServer(option={}){
-    let val = +select_element.value;
-    // console.log(select_element.value)
-
-    if(val > 0){
-        await fetch('/option/select/'+`${select_element.value}`).then(r=>r.json())
-        .then(data => {
-            const pathname = window.location.pathname;
-            // console.log(data)
-                switch(true){
-                    
-                    case data['val'] === 0: // 0
-                    window.location.href = window.location.origin + '/event/list/all';
-                    break;
-                    case data['val'] === 1: // 1
-                    // maintitle.textContent = 'Create An Event'
-                    if(eventtitle){
-                        eventtitle.textContent = 'Create An Event'
-                        if(maintitle)maintitle.classList.add('hidden');
-                    } else {
-                        if(maintitle)maintitle.textContent = 'Create an Event';
-                    }
-                    if(eventlistcontainer)eventlistcontainer.classList.add('no-display')
-                    main.classList.remove('hidden')
-                    eventContainer.classList.remove('hidden')
-                    eventContainer.classList.remove('no-display')
-                    break;
-                    case data['val'] === .25: // 0
-                    window.location.href = window.location.origin + '/event/list/upcoming';
-                    break;
-                    case data['val'] === .5: // 0
-                    window.location.href = window.location.origin + '/event/list/completed';
-                    break;
-                    case data['val'] === .75: // 0
-                    window.location.href = window.location.origin + '/event/list/canceled';
-                    break;
-
-                    case data['val'] === 2: //2
-                    main.classList.remove('hidden')
-                    eventContainer.classList.add('hidden')
-                    if(eventlistcontainer)eventlistcontainer.classList.add('no-display')
-                    if(eventtitle){
-                        eventtitle.textContent = 'Create a Game';
-                        maintitle.classList.add('hidden')
-                    } else {
-                        maintitle.classList.remove('hidden')
-                        maintitle.textContent = 'Create a Game';
-                    }
-                    break;
-
-                    default:
-                    console.log(undefined);
-                    break;
-                }
-        })
-    }
-    else {
-        return null
-    }
-}
-function updateOptionOnchange(select){
-    
-    let options = [...select.children];
-    let pathname = window.location.pathname;
-    let splitpathname = pathname.split`/`;
-    let getpath = splitpathname[splitpathname.length-1];
-    // console.log(getpath)
-
-
-    let target = options.find(elem => new RegExp(getpath,'i').test(elem.textContent))||'not found';
-    console.log(target)
-    // console.log(optionNames);
-    // console.log(pathname)
-
-    if(target === 'not found'){
-        updateOptionFromServer({val:true})
-    }
-    select.value = target === 'not found' ? 0 : target.value;
-    
-}
 function windowScroll(){
     let scrollY = window.scrollY;
     if(lockdimmer === true){
         console.log('dimmer is locked')
         window.scrollTo(0,document.body.scrollTop - 1)
-    } else {
-        console.log(scrollY)
     }
     if(scrollY <= document.body.clientHeight){
         membertitle.parentElement.style.transform = `translate(${scrollY}px,0)`;
         document.getElementById('bball-icon').style.transform = `rotate(${scrollY}deg)`;
     }
 }
+/* ---------------------------- functions ----------------------------  */

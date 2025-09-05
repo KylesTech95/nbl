@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signup</title>
+</head>
+
+<!-- styles -->
+<%- include('./stylesheet/styles.ejs') %>
+<%- include('./stylesheet/auth.ejs') %>
+
+<!-- header -->
+<%- include('./partials/header.ejs') %>
+
+
+<body>
+    <% if(admin!==false) { %>
+            <h1 id="admin-label">
+                ADMIN
+            </h1>
+            <% } %>
+    <h1 id="main-title" class="auth"><%= title %></h1>
+    <!-- form -->
+    <form action="/auth/singup/submit" id="nbl_ad_auth" enctype="multipart/form-data">
+        <div>
+            <label for="firstname">Fisrst Name</label>
+            <input type="text" id="firstname_field" name="firstname" placeholder="Firstname" required>
+        </div>
+        <div>
+             <label for="lastname">Last Name</label>
+            <input type="text" id="lastname_field" name="lastname" placeholder="Lastname" required>
+        </div>
+        <div>
+             <label for="email">Email</label>
+            <input type="email" id="email_field" name="email" placeholder="email" required>
+        </div>
+        <div>
+             <label for="phone">phone</label>
+            <input type="text" id="phone_field" name="phone" placeholder="Phone" required>
+        </div>
+        
+        
+        <input type="submit">
+    </form>
+
+<%- include('partials/footer.ejs') %>
+
+<script src="../javascript/admin.js" type="module"></script>
+</body>
+</html>

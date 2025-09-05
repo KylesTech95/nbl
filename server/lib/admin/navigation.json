@@ -1,15 +1,13 @@
 {
     "Home":{
         "open":true,
-        "href":"/c"
+        "href":"/"
     },
     "Games":{
-        "open":true,
-        "href":"/games"
+        "open":true
     },
     "Events":{
-        "open":true,
-        "href":"/events"
+        "open":true
     },
     "Contact":{
         "open":true,
@@ -17,10 +15,10 @@
     },
     "Login":{
         "open":true,
-        "href":"/login"
+        "href":"/auth/login"
     },
     "Signup":{
         "open":true,
-        "href":"/signup"
+        "href":"/auth/signup"
     }
 }

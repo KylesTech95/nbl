@@ -1,12 +1,13 @@
 <div id="event-container-create" class="hidden no-display">
-<!-- <div id="event-container-create"> -->
+<!-- <div id="game-container-create"> -->
     <!-- form -->
-    <form action="/event/create" method="post">
-            <!-- event name -->
-            <div id="name-container">
-                <label for="event_name">Event Name</label>
-                <input type="text" name="event_name" id="event-name" required>
-            </div>
+    <form action="/game/create" method="post">
+            <!-- game type -->
+             <select name="game_type" id="game-type-selection">
+                <option value="REG">Regular</option>
+                <option value="TOURNY">Tournament</option>
+                <option value="CSTM">Custom</option>
+             </select>
 
             <!-- event description -->
             <div id="description-container">
