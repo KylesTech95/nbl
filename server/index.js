@@ -64,14 +64,23 @@ app.use('/auth',auth)
 
 // routes
 app.route('/').get((req,res)=>{
-    if(/^\/$/.test(req.path) && req.path.length===1){
+    if(req.authenticated){ 
+    // if(1+1==2){ 
+        if(/^\/$/.test(req.path) && req.path.length===1){
+        res.render('index',{
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && navigation['common'][str]['open']),
+            dirspace:false, // determines
+            authenticated:true,
+        })
+    }
+    } else {
+        if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
             navlinks:Object.keys(navigation['common']).filter(str => !/(Games|Events)/g.test(str) && navigation['common'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
         })
-    } else {
-        unauthoized;
+    }
     }
 })
 app.route('/:type/event/read/:id').get(async(req,res)=>{

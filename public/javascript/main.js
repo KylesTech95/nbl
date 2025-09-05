@@ -9,9 +9,10 @@ const eventtitle = document.getElementById('events-title')
 const eventContainer = document.getElementById('event-container-create')
 const eventlistcontainer = document.getElementById('event-list-container')
 const membertitle = document.getElementById('member-title')
+const memberMega = document.getElementById('memeber-mega-container')
 let getPos = undefined;
-const bgImg = new Image();
-
+const bgImg = document.querySelector('.bg-img')
+const scrollball = document.getElementById('bball-icon');
 
 /* -------------------------- variables/imports -------------------------- */
 
@@ -23,24 +24,15 @@ window.onload = loadWindowPlans(main,bgImg,dimmer)
 
 
 /* -------------------------- background images -------------------------- */
-bgImg.classList.add('bg-img');
-bgImg.classList.add('no-pointer');
 
 const counted = await fetch('/media/gif').then(r=>r.json()).then(d=>d['dir'])
 const seconds = 7; // NBL STANDARD
 let counter = 0, max = counted.length, bgInterval;
-
 bgImg.src = '../../media/gif/' + counted[Math.floor(Math.random() * max)];
-// main ? main.appendChild(bgImg) : null;
-main ? main.insertBefore(bgImg,document.getElementById('event-container-create')) : null
+
 // initiate interval
 bgInterval = setInterval(()=> {
-    
     counter++
-    // console.log(counter);
-    // console.log("MODELO")
-    // console.log(counter % max)
-    // console.log(counted[counter % max])
     bgImg.src = '../../media/gif/' + counted[counter % max];
 },seconds*1000) // 6 seconds
 
@@ -100,8 +92,8 @@ function windowScroll(){
         window.scrollTo(0,document.body.scrollTop - 1)
     }
     if(scrollY <= document.body.clientHeight){
-        membertitle.parentElement.style.transform = `translate(${scrollY}px,0)`;
-        document.getElementById('bball-icon').style.transform = `rotate(${scrollY}deg)`;
+        membertitle ? membertitle.parentElement.style.transform = `translate(${scrollY}px,0)` : null;
+        scrollball ? scrollball.style.transform = `rotate(${scrollY}deg)` : null;
     }
 }
 /* ---------------------------- functions ----------------------------  */

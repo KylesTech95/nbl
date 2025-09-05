@@ -93,17 +93,23 @@ a{
         /* border:2px solid yellow; */
     }
 
-    #header-title{
+    #header-title,#footer-title-id{
         position:absolute;
-        bottom:2.5px;
-        left:5px;
-        /* animation:leftToRight 5s normal; */
         font-size:30pt;
         font-family:'basketball' 'bball'; /* fallback font (bball) */
         letter-spacing:2.5px;
         color:#fff;
+    }
+    #header-title{
+        bottom:2.5px;
+        left:10px;
         transform:translate(15px,4px);
-        letter-spacing: 8px;
+    }
+    #footer-title-id{
+        /* border:2px solid red; */
+        bottom:-15px;
+        right:10px;
+        transform:translate(0,-15px);
     }
 
     /*@keyframes leftToRight {
@@ -120,7 +126,7 @@ a{
         transform:rotate(20deg);
         opacity:.6;
         width:120px;
-        transition:1.5s;
+        transition:.5s;
     }
     #bball:hover{
         opacity: 1;
@@ -180,6 +186,11 @@ a{
     #title-container:hover{
         cursor:pointer;
     }
+    #title-container.footer-title{
+        float:right;
+        transform:translate(0,20px);
+    }
+
     .dimmer-num{
         color:#fff;
         position: absolute;
@@ -219,12 +230,6 @@ a{
     #main{
         /* background-image:linear-gradient(transparent 10%, red, transparent 10%); */
         position: relative;
-        /* background-repeat:no-repeat;
-        background-color:#aeb7cf;
-        background-blend-mode: multiply;
-        background-position: start center;
-        background-size:cover; */
-        /* background-image:url('../media/gif/eric_3_pointer.gif'); */
         height:100%;
         width:100%;
         display:flex;
@@ -444,9 +449,8 @@ a{
 
 
      #footer{
-        /* position:absolute;
-        left:0;
-        bottom:0; */
+        position:relative;
+        /* border:2px solid red; */
         height:150px;
         width:100%;
         background-image:linear-gradient(180deg,#000000 25%,#eb9408 75%);
@@ -474,6 +478,10 @@ a{
             display:Flex;
             flex-direction:column;
             gap:.25rem;
+        }
+        
+        #bball{
+            transform:scale(.8) rotate(279deg);
         }
 
     }
