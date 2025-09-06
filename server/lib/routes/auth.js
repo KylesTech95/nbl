@@ -4,13 +4,14 @@ const navigation = {
     common:require("../common/navigation.json"),
     admin:require("../admin/navigation.json")
 }
+const passport = require('passport')
 
 
-const timelog = (req,res,next) => {
-    let current_time = new Date(Date.now()).toString();
-    console.log(current_time)
-    next();
-}
+// const timelog = (req,res,next) => {
+//     let current_time = new Date(Date.now()).toString();
+//     console.log(current_time)
+//     next();
+// }
 // router.use(timelog)
 
 
@@ -41,7 +42,7 @@ router.route('/signup').get((req,res)=>{
 router.route('/admin/login').get((req,res)=>{
     if(/^\/admin\/login$/.test(req.path)){
         res.render('login',{
-            navlinks:Object.keys(navigation['admin']).filter(str => !/(Events|Games)/g.test(str) && navigation['admin'][str]['open']),
+            navlinks:Object.keys(navigation['admin']).filter(str => !/(Events|Games|Signup)/g.test(str) && navigation['admin'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
             title:'Login',
@@ -54,7 +55,15 @@ router.route('/forgot-pw').get((req,res)=>{
     res.status(200).send(comingSoon)
 })
 
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile'] }));
 
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 
 module.exports = router

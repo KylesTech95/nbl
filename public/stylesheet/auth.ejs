@@ -17,7 +17,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top:2rem;
         gap:1rem;
         z-index: 999;
     }
@@ -93,9 +92,40 @@ input[type='submit']:hover{
     border-right:none;
     letter-spacing: 2.25px;
 }
+#auth-foreign-contaner{
+    /* bordeR:2px solid red; */
+    padding:.5rem;
+    display:flex;
+    align-items: start;
+    justify-content: space-evenly;
+    margin-top:1rem;
+    gap:1rem;
+}
+#or-container>p{
+    color:#fff;
+    margin-top:1.5rem;
+}
+.foreign-link{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-size:11pt;
+    letter-spacing: 1.25px;
+}
+.logo-foreign{
+    width:75px;
+    transition: .75s;
+}
+.logo-foreign:hover{
+    width:65px;
+    transition: .25s;
+    cursor:pointer;
+}
 @media screen and (max-width:670px){
     form#nbl_ad_auth{
         width:88%;
+        gap:5px;
     }
     form#nbl_ad_auth>div{
         align-items: center;

@@ -9,6 +9,9 @@ const port = 5535;
 const cors = require('cors')
 const path = require('path')
 const bp = require('body-parser')
+const passport = require('./lib/passport/strategy.js');
+const session = require('express-session')
+
 // const onedrive = require('onedrive-api')
 const ejs = 'ejs'
 const dest = { // destination
@@ -56,6 +59,14 @@ app.set('view engine', ejs)
 app.set('views', path.join(__dirname,'..','public'))
 
 // middleware
+app.use(session({
+    secret:'secret-key',
+    resave:false,
+    saveUninitialized:false,
+}))
+app.use(passport.initialize()) // enable session support for passport
+app.use(passport.session()) // enable session support for passport
+
 app.use(express.static(path.join(__dirname,'..','public')))
 app.use(cors())
 app.use(express.urlencoded({extended:true}))
@@ -64,8 +75,7 @@ app.use('/auth',auth)
 
 // routes
 app.route('/').get((req,res)=>{
-    if(req.authenticated){ 
-    // if(1+1==2){ 
+    if(1+1==3){ // temp authentication condition
         if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
             navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && navigation['common'][str]['open']),
@@ -150,7 +160,7 @@ app.route('/:type/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
         res.render('events.ejs',{
             navlinks:Object.keys(navigation[type]).filter(str => !/(Login|Signup|Events)/g.test(str) && navigation[type][str]['open']),
             event_data:events, // array of events
-            dirspace:false, // determines 
+            dirspace:true, // determines 
             authenticated:false,
             parameter:!paramStatus.find(p=>new RegExp(p,'ig').test(parameter)) ? undefined : parameter,
             create:true,
@@ -197,15 +207,6 @@ app.route('/media/:type').get((req,res)=>{
         res.json(payload);
 })
 
-app.route('/option/select/:val').get((req,res)=>{
-    
-    let {val} = req.params;
-    // since None is not an option, decrement value by 1
-    val--
-    // console.log(val);
-    res.json({val:val})
-})
-
 // onedrive
 // list children of a given root directory
 
@@ -241,7 +242,7 @@ function isAuthenticated(req,res,next){
     // method
     // if(req.authenticated){
     if(req.authenticated!==undefined && req.authenticated !== false){
-    // if(1+1===3){
+    // if(1+1===2){
         console.log("auth status:")
         console.log(req.authenticated)
         next();
@@ -249,6 +250,7 @@ function isAuthenticated(req,res,next){
         unauthoized(req,res)
     }
 }
+// check if NOT authenticated
 function isNotAuthenticated(req,res,next){
     // method
     if(!req.authenticated){
@@ -260,9 +262,11 @@ function isNotAuthenticated(req,res,next){
         res.redirect('/')
     }
 }
+// page not found
 function pageNotFound(req,res){
     res.status(404).send('Page not found')
 }
+// unauthorized
 function unauthoized(req,res){
     res.status(403).send('Forbidden')
 }

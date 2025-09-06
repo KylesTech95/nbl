@@ -20,7 +20,11 @@
                 ADMIN
             </h1>
             <% } %>
+            
         <h1 id="main-title" class="auth"><%= title %></h1>
+
+        <!-- foreign auth -->
+        <%- include('./partials/auth_foreign.ejs') %>
     <!-- form -->
     <form action="/auth/login/submit" id="nbl_ad_auth" enctype="multipart/form-data">
         <div>
