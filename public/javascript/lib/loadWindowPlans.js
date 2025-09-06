@@ -6,5 +6,5 @@ export default function loadWindowPlans(main,bgImg,dimmer){
     const pathname = window.location.pathname;
         main ? main.classList.remove('hidden') : null;
         // return
-        dimmer ? loadDimmer(bgImg,dimmer) : null;
+            dimmer ? loadDimmer(bgImg,dimmer) : null;
 }

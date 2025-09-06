@@ -49,6 +49,10 @@ router.route('/admin/login').get((req,res)=>{
         })
     } 
 })
+router.route('/forgot-pw').get((req,res)=>{
+    const comingSoon = 'Page coming soon.'
+    res.status(200).send(comingSoon)
+})
 
 
 
