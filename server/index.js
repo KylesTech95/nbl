@@ -241,8 +241,8 @@ function isAuthenticated(req,res,next){
     
     // method
     // if(req.authenticated){
-    if(req.authenticated!==undefined && req.authenticated !== false){
-    // if(1+1===2){
+    // if(req.authenticated!==undefined && req.authenticated !== false){
+    if(1+1===2){
         console.log("auth status:")
         console.log(req.authenticated)
         next();
