@@ -93,7 +93,7 @@ function fitImageToDevice(imageElement) {
 function windowScroll(){
     let scrollY = window.scrollY;
     if(lockdimmer === true){
-        console.log('dimmer is locked')
+        // console.log('dimmer is locked')
         window.scrollTo(0,document.body.scrollTop - 1)
     }
     if(scrollY <= document.body.clientHeight){

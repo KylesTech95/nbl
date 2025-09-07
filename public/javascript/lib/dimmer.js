@@ -51,6 +51,8 @@ export function moveDimmer(e){
 }
 export function touchDimmer(e){
     let mouseY = e.touches[0].clientY;
+    let mouseX = e.touches[0].clientX
+    let dimmerX = dimmerbar.getBoundingClientRect().x;
     let dimmerRange = (mouseY >= dimmerY && mouseY+dimmer.clientHeight <= dimmerLen) // boolean
 
     let [minval,maxval] = [0,dimmerbar.clientHeight]
@@ -60,6 +62,12 @@ export function touchDimmer(e){
         dimmer.style.top = originalval + "px";
         dimmerDisplay.textContent = mouseY;
         bgImg.style.opacity = mapval.toFixed(2)
+
+         // use tooltip
+            tooltip.style.top = originalval + dimmerY + (dimmer.clientHeight / 2) + "px";
+            tooltip.style.width = Math.abs(mouseX - dimmerX) + "px"
+            tooltip.classList.remove('no-display')
+            tooltip.classList.remove('transition-25')
     }
 }
 export function releaseDimmer(e){
@@ -82,7 +90,7 @@ export function loadDimmer(bgImg,dimmer){
 export function resizeDimmer(dimmer){
     let percentage = '50%';
     dimmer.parentElement.style.height = percentage;
-    console.log(percentage)
+    // console.log(percentage)
 }
 
 // lock onto the dimmer
