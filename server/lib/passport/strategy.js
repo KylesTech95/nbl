@@ -1,3 +1,4 @@
+require('dotenv').config()
 const passport = require('passport')
 /* ---------------------------- Local ---------------------------- */
 var LocalStrategy = require('passport-local').Strategy;
@@ -18,12 +19,12 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 /* ---------------------------- Google ---------------------------- */
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+// var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // passport.use(new GoogleStrategy({
-//     clientID: GOOGLE_CLIENT_ID,
-//     clientSecret: GOOGLE_CLIENT_SECRET,
-//     callbackURL: "http://www.example.com/auth/google/callback"
+//     clientID: process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_SECRET,
+//     callbackURL: "http://localhost/auth/google/callback"
 //   },
 //   function(accessToken, refreshToken, profile, cb) {
 //     User.findOrCreate({ googleId: profile.id }, function (err, user) {
