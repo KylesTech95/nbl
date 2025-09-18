@@ -38,12 +38,13 @@ html{
 }
 
     body{
-        overflow-x:none;
-        overflow-y:none;
-        overflow:hidden;
-        height: 100vh;
+         overflow: hidden;
+        position: fixed;
+        width: 100%; /* Ensures the content remains within the viewport */
+        height: 100%; /* Ensures the content remains within the viewport */
+        top: 0;
+        left: 0;
         /* background:silver; */
-        width:100%;
         background:#000;
         display:flex;
         flex-direction: column;
