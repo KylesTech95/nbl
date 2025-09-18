@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta navme="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./stylesheet/styles.css">
+    <title>DimmerJs</title>
+</head>
+<div id="options-container">
+    <h1 id="options-title">Dimmer Options</h1>
+    <!-- dimmer bar icons -->
+    <div class="options-col">
+        <p class="options-title-cl">Dimmer icons</p>
+        <ul id="icons-container">
+            <li class="icons-list-item"><img src="./media/png/basketball_icon.png" class="icons-list-img" alt=""></li>
+            <li class="icons-list-item"><img src="./media/png/poodle.png" class="icons-list-img" alt=""></li>
+            <li class="icons-list-item"><img src="./media/png/monkey.png" class="icons-list-img" alt=""></li>
+            <li class="icons-list-item"><img src="./media/png/shark.png" class="icons-list-img" alt=""></li>
+            <li class="icons-list-item"><img src="./media/png/mouse.png" class="icons-list-img" alt=""></li>
+        </ul>
+    </div>
+
+    <!-- tooltip-colors -->
+    <div class="options-col">
+        <p class="options-title-cl">tool-tip color</p>
+        <ul id="colors-container">
+            <li class="colors-list-item" style="background:red"></li>
+            <li class="colors-list-item" style="background:orangered"></li>
+            <li class="colors-list-item" style="background:orange"></li>
+            <li class="colors-list-item" style="background:yellow"></li>
+            <li class="colors-list-item" style="background:lightgreen"></li>
+            <li class="colors-list-item" style="background:green"></li>
+            <li class="colors-list-item" style="background:cyan"></li>
+            <li class="colors-list-item" style="background:lightblue"></li>
+            <li class="colors-list-item" style="background:blue"></li>
+            <li class="colors-list-item" style="background:violet"></li>
+            <li class="colors-list-item" style="background:purple"></li>
+            <li class="colors-list-item" style="background:indigo"></li>
+        </ul>
+    </div>
+    
+</div>
+<main id="main" class="hidden">
+    <!-- background preview (GIF) -->
+     <div id="dimmer" class="bar-dimmer dimmer-bar">
+        <img src="./media/png/sun.png" class="dimmer-num dimmer-top"></img>
+        <img src="./media/png/sun.png" class="dimmer-num dimmer-bottom crest-big">1</p>
+        <!-- <img draggable="false" id="bball-icon-scroll" src="./media/png/poodle.png" alt=""> -->
+        <img draggable="false" id="bball-icon-scroll" src="./media/png/monkey.png" alt="">
+     </div>
+
+    <img alt="bg img slideshow" class="bg-img no-pointer">
+
+</main>
+
+    <script src="./javascript/main.js" type="module"></script>
+</body>
+</html>
