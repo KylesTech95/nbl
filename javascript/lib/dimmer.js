@@ -105,6 +105,7 @@ export function releaseDimmer(e){
 }
 export function loadDimmer(bgImg,dimmer){
     document.body.append(tooltip);
+    tooltip.style.border = `.25rem solid ${tooltipcolor}`
         let normalizedValue = '.35';
         bgImg.style.opacity = normalizedValue;
         tooltip.style.top = dimmer.getBoundingClientRect().y + (dimmer.clientHeight / 2) + "px"
