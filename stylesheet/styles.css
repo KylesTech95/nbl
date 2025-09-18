@@ -518,7 +518,6 @@ a{
      }
 
      .options-col{
-        height:50%;
         width:100%;
         /* background:green; */
         border:.5px solid #000;
@@ -552,22 +551,34 @@ a{
         transition: .25s;
      }
 
-    @media screen and (min-width:1000px) {
-        #select-btn:hover{
-            background:rgba(255, 0, 0, 0.524);
-            cursor:pointer;
-        }
-    }
     @media screen and (max-width:670px) {
-        #nav>ul{
-            transition: .5s;
-            display:Flex;
-            flex-direction:column;
-            gap:.25rem;
+        #options-title{
+            font-size:32pt;
         }
-        
+        .icons-list-img{
+            width:66px;
+        }
+  #colors-container{min-height:35px;}
+        .options-col{
+            padding:.5rem;
+        }
+       
+        #dimmer{
+            width:2rem;
+            right:5px;
+
+        }
         #bball{
             transform:scale(.8) rotate(279deg);
         }
 
+        #bball-icon-scroll{
+        position:absolute;
+        width:50px;
+        z-index:999;
+        transform:translate(-10.5px,0);
+     }
+
     }
+
+    
