@@ -31,7 +31,16 @@ a{
     font-family:'basketball','bball', Arial, Helvetica, sans-serif;
 }
 
+html{
+    overflow-x:none;
+        overflow-y:none;
+        overflow:hidden;
+}
+
     body{
+        overflow-x:none;
+        overflow-y:none;
+        overflow:hidden;
         height: 100vh;
         /* background:silver; */
         width:100%;
