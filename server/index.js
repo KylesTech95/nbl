@@ -74,6 +74,8 @@ app.use(express.json())
 app.use('/auth',auth)
 
 // routes
+
+// homepage
 app.route('/').get((req,res)=>{
     if(1+1==3){ // temp authentication condition
         if(/^\/$/.test(req.path) && req.path.length===1){
@@ -86,11 +88,30 @@ app.route('/').get((req,res)=>{
     } else {
         if(/^\/$/.test(req.path) && req.path.length===1){
         res.render('index',{
-            navlinks:Object.keys(navigation['common']).filter(str => !/(Games|Events)/g.test(str) && navigation['common'][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Games|Events|Players)/g.test(str) && navigation['common'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
         })
     }
+    }
+})
+// create a game or an event
+app.route('/:type/rec/create').get((req,res)=>{
+    const {type} = req.params;
+    try{
+        if(/^(game|event|player)$/ig.test(type)){
+            res.render('create',{
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && !(new RegExp(type,'i').test(str)) && navigation['common'][str]['open']),
+            dirspace:false, // determines
+            authenticated:true,
+            create:{type:type}
+        })
+        } else {
+            res.status(404).send("Path does not exist.<br>Go <a href='/'>Home</a>")
+        }
+    }
+    catch(err){
+        throw new Error(err)
     }
 })
 app.route('/:type/event/read/:id').get(async(req,res)=>{
@@ -114,6 +135,7 @@ app.route('/:type/event/read/:id').get(async(req,res)=>{
         throw new Error(err)
     }
 })
+// post - create events
 app.route('/event/create').post((req,res)=>{
     let {
         event_name,
@@ -143,12 +165,58 @@ app.route('/event/create').post((req,res)=>{
     payload.eventDetails = eventDetails
     payload = {...payload,...default_options}
 
-    // console.log(payload)
     createEvent(payload);
     
     res.redirect('/event/list/all')
-    // res.json(payload);
 })
+// post - create game
+app.route('/game/create').post((req,res)=>{
+    let {
+        event_name,
+        event_description,
+        event_start_date,
+        event_end_date,
+        event_start_time0,
+        event_start_time1,
+        event_start_time2,
+        event_start_time3,
+        event_end_time0,
+        event_end_time1,
+        event_end_time2,
+        event_end_time3} = req.body;
+    let payload = {};
+    payload.id = '31e33d31';
+    payload.name = event_name;
+    payload.description = event_description;
+    payload.createdAt = Date.now();
+    payload.updatedAt = null;
+    // event details
+    eventDetails.start_date = event_start_date;
+    eventDetails.end_date = event_end_date;
+    eventDetails.start_time = `${event_start_time0}${event_start_time1}:${event_start_time2}${event_start_time3}`
+    eventDetails.end_time = `${event_end_time0}${event_end_time1}:${event_end_time2}${event_end_time3}`
+
+    payload.eventDetails = eventDetails
+    payload = {...payload,...default_options}
+
+    createEvent(payload);
+    
+    res.redirect('/event/list/all')
+})
+
+// get - all events in json
+app.route('/events/all').get(isAuthenticated, async(req,res)=>{
+    
+    try{
+        // get list of events from db
+        const events = await findAll(Event); // array of events
+        res.json({data:events})
+    }
+    catch(err){
+        throw new Error(err)
+    }
+})
+// events listed by type (all,upcoming,canceled, completed)
 app.route('/:type/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
     const paramStatus = ['all','upcoming','completed','canceled'];
     let {type,parameter} = req.params;
@@ -170,18 +238,8 @@ app.route('/:type/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
         throw new Error(err)
     }
 })
-app.route('/events/all').get(isAuthenticated, async(req,res)=>{
-    
-    try{
-        // get list of events from db
-        const events = await findAll(Event); // array of events
-        res.json({data:events})
-    }
-    catch(err){
-        throw new Error(err)
-    }
-})
 
+// get - read directory from png or gif
 app.route('/media/:type').get((req,res)=>{
     const {type} = req.params;
     let dir, len, payload;

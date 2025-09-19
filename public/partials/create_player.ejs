@@ -1,0 +1,36 @@
+<!-- <div id="event-container-create" class="hidden no-display"> -->
+<div id="player-container-create" class="">
+<!-- <div id="event-container-create"> -->
+    <!-- form -->
+    <form action="/player/create" method="post">
+            <!-- Player name -->
+                <div class="player-col">
+                    <label for="firstname">Firstname</label>
+                    <input type="text" name="firstname" id="player-first-name" required placeholder="Firstname">
+                </div>
+                <div class="player-col">
+                    <label for="firstname">Lastname</label>
+                    <input type="text" name="lastname" id="player-last-name" placeholder="Lastname">
+                </div>
+
+           
+            
+           <!-- Player age -->
+            <div class="player-col">
+                <label for="age">Age</label>
+                <input type="number" name="age" min="14" max="100" id="player-age" required>
+            </label>
+            </div>
+
+            <!-- email -->
+             <div class="player-col">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="player-email" placeholder="Email" required>
+             </div>
+            
+
+
+
+            <button type="submit">Submit</button>
+    </form>
+</div>

@@ -19,6 +19,20 @@ input::-webkit-inner-spin-button {
 input[type=number]{
 outline:none;
 }
+button[type=submit]{
+    padding:.5rem;
+    border: none;
+    border-radius: 12px;
+    background:#000;
+    color:#fff;
+    transition: .25s;
+    
+}
+button[type=submit]:hover{
+    cursor:pointer;
+    background:#fff;
+    color:#000;
+}
 a{
     color:#fff;
 }
@@ -307,7 +321,8 @@ a{
     }
     #event-container-create,
     #event-container-read,
-    #game-container-create{
+    #game-container-create,
+    #player-container-create{
         background:rgb(255, 255, 255);
         height:100%;
         width:100%;
@@ -319,12 +334,7 @@ a{
         justify-content: center;
         padding:.5rem;
     }
-    #event-container-create,
-    #game-container-create{
 
-    }
-    #event-container-read{
-    }
 
     #event-container-create > form,
     #game-container-create>form {
@@ -335,12 +345,24 @@ a{
         align-items: start;
         justify-content: space-evenly;
     }
-
+    #player-container-create>form{
+        height:100%;
+        width:inherit;
+        display:flex;
+        align-items: end;
+        justify-content: space-evenly;
+    }
+    #player-container-create>form > div > input{
+        font-size:14pt;
+        padding:.25rem;
+    }
      #event-container-create > form > div,
-     #game-container-create > form > div {
+     #game-container-create > form > div,
+     #player-container-create>form>div {
         display:flex;
         flex-direction: column;
      }
+    
      .time-col{
         display:flex;
         align-items: center;
@@ -348,7 +370,20 @@ a{
         gap:.5rem;
         width:100%;
      }
+     #player-container-create>form{
+        gap:.5rem;
+     }
+     .player-col{
+        display:flex;
+        border-bottom:.5px solid #000;
+        width:400px;
+        font-size:18pt;
+        padding:.25rem;
+     }
 
+     #player-email{
+        font-family: Arial, Helvetica, sans-serif !important;
+     }
      .time-col>div{
         display:flex;
         gap:.5rem;
@@ -483,11 +518,12 @@ a{
     }
 
      #footer{
-        position:relative;
+        bottom:0;
+        position:fixed;
         /* border:2px solid red; */
-        height:150px;
+        height:95px;
         width:100%;
-        background-image:linear-gradient(180deg,#000000 25%,#eb9408 75%);
+        background-image:linear-gradient(180deg,transparent 25%,#eb9408 75%);
         animation:loadOp 1.75s ease-in normal;
      }
 
@@ -507,13 +543,23 @@ a{
         }
     }
     @media screen and (max-width:670px) {
+        button[type=submit]{
+                width:25%;
+            }
         #nav>ul{
             transition: .5s;
             display:Flex;
             flex-direction:column;
             gap:.25rem;
         }
-        
+         #player-container-create>form{
+        height:100%;
+        width:inherit;
+        display:flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-evenly;
+    }
         #bball{
             transform:scale(.8) rotate(279deg);
         }

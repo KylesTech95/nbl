@@ -7,6 +7,10 @@
         "open":true,
         "href":"/games"
     },
+    "Players":{
+        "open":true,
+        "href":"/players"
+    },
     "Events":{
         "open":true,
         "href":"/events"

@@ -3,6 +3,10 @@
         "open":true,
         "href":"/"
     },
+    "Players":{
+        "open":true,
+        "href":"/players"
+    },
     "Games":{
         "open":true
     },

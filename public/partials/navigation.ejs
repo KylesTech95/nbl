@@ -7,6 +7,10 @@
                     <% if(link==='Home'){ %>
                         <a id="homeref" href="/"><%= link %></a>
             </li>
+                    <% } if(link==='Players'){ %>
+            <li class="nav-list-item">
+                        <a href="/players"><%= link %></a>
+            </li>
                 <% } if(link==='Games'){ %>
             <li class="nav-list-item">
                         <a href="/games"><%= link %></a>
@@ -20,13 +24,13 @@
                         <a href="#footer"><%= link %></a>
             </li>
                         <% } if(link==='Login'){ %>
-                <li class="nav-list-item">
-                        <a href="/auth/login"><%= link %></a>
-                </li>
-                            <% } if(link==='Signup'){ %>
-                <li class="nav-list-item">
-                            <a href="/auth/signup"><%= link %></a>
-                </li>   
+            <li class="nav-list-item">
+                    <a href="/auth/login"><%= link %></a>
+            </li>
+                        <% } if(link==='Signup'){ %>
+            <li class="nav-list-item">
+                        <a href="/auth/signup"><%= link %></a>
+            </li>   
                         <% } %>
                 
         <% }) %>

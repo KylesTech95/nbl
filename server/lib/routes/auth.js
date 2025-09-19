@@ -18,7 +18,7 @@ const passport = require('passport')
 router.route('/login').get((req,res)=>{
     if(/^\/login$/.test(req.path)){
         res.render('login',{
-            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Login)/g.test(str) && navigation['common'][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Players|Login)/g.test(str) && navigation['common'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
             title:'Login',
@@ -29,7 +29,7 @@ router.route('/login').get((req,res)=>{
 router.route('/signup').get((req,res)=>{
     if(/^\/signup$/.test(req.path)){
         res.render('signup',{
-            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Signup)/g.test(str) && navigation['common'][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Events|Games|Players|Signup)/g.test(str) && navigation['common'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
             title:'Signup',
@@ -42,7 +42,7 @@ router.route('/signup').get((req,res)=>{
 router.route('/admin/login').get((req,res)=>{
     if(/^\/admin\/login$/.test(req.path)){
         res.render('login',{
-            navlinks:Object.keys(navigation['admin']).filter(str => !/(Events|Games|Signup)/g.test(str) && navigation['admin'][str]['open']),
+            navlinks:Object.keys(navigation['admin']).filter(str => !/(Events|Games|Players|Signup)/g.test(str) && navigation['admin'][str]['open']),
             dirspace:false, // determines
             authenticated:false,
             title:'Login',

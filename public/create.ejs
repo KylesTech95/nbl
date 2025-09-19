@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta navme="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBL - Create <% create.type %></title>
+</head>
+
+<!-- styles -->
+<%- include("./stylesheet/styles.ejs") %>
+
+
+
+<body>
+
+<!-- header -->
+    <%- include('./partials/header.ejs') %>
+
+    <!-- main -->
+
+    <!-- create -->
+    <% if(create.type==='event') { %>
+        <%- include('./partials/create_event.ejs') %>
+    <% } %>
+
+    <!-- game -->
+    <% if(create.type==='game') { %>
+        <%- include('./partials/create_game.ejs') %>
+    <% } %>
+
+    <!-- player -->
+    <% if(create.type==='player') { %>
+        <%- include('./partials/create_player.ejs') %>
+    <% } %>
+
+    <!-- footer -->
+    <%- include('./partials/footer.ejs') %>
+
+    <script src="../../javascript/main.js" type="module"></script>
+</body>
+</html>
