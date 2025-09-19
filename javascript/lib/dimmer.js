@@ -30,7 +30,6 @@ let tt_colors = document.querySelectorAll('.colors-list-item');
 
 icons.forEach(icon=>{
     icon.onclick = e => {
-        console.log(e.currentTarget);
         dimmer.src = e.currentTarget.src;
     }
 })
@@ -40,7 +39,6 @@ tt_colors.forEach(color=>{
         tooltipcolor = bg
 
         tooltip.style.border = `.25rem solid ${tooltipcolor}`
-        console.log(tooltip)
     }
 })
 
@@ -62,7 +60,6 @@ export function moveDimmer(e){
         if(lockdimmer===true && dimmerRange){
             let originalval = mouseY - dimmerY - (dimmer.clientHeight/2)
             let mapval = .34 + (originalval - minval) / (maxval) - minval;
-            console.log(mapval)
             dimmer.style.top = originalval + "px";
             dimmerDisplay.textContent = mouseY;
             bgImg.style.opacity = mapval.toFixed(2)
