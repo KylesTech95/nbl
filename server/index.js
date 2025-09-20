@@ -217,16 +217,15 @@ app.route('/events/all').get(isAuthenticated, async(req,res)=>{
     }
 })
 // events listed by type (all,upcoming,canceled, completed)
-app.route('/:type/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
+app.route('/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
     const paramStatus = ['all','upcoming','completed','canceled'];
-    let {type,parameter} = req.params;
-    if(!type||type===undefined)type='common'
+    let {parameter} = req.params;
     try{
         // get list of events from db
         const events = await findAll(Event); // array of events
         // console.log(events)
         res.render('events.ejs',{
-            navlinks:Object.keys(navigation[type]).filter(str => !/(Login|Signup|Events)/g.test(str) && navigation[type][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup|Events)/g.test(str) && navigation['common'][str]['open']),
             event_data:events, // array of events
             dirspace:true, // determines 
             authenticated:false,

@@ -1,7 +1,6 @@
  const tiles = [...document.querySelectorAll('.event-list-item')];
 
 
-
  /* ----------------- handle tile evenets ----------------- */
  let currentPos = {x:undefined,y:undefined};
  let insideTile = false;
@@ -41,14 +40,7 @@
  for(let i = 0; i < tiles.length; i++) {
    
     if(tiles[i]){
-       let customBg = `<div class="no-display" id="custom-bg-wrapper">
-        <div id="tile-bg-container">
-            <div class="circle translate-left"></div>
-            <div class="line line-vert"></div>
-            <div class="line line-horiz absolute"></div>
-            <div class="circle translate-right"></div>
-        </div>
-    </div>`
+       let customBg = `<div class="no-display" id="custom-bg-wrapper"><div id="tile-bg-container"><div class="circle translate-left"></div><div class="line line-vert"></div><div class="line line-horiz absolute"></div><div class="circle translate-right"></div></div></div>`
       let mydiv = document.createElement('div')
       mydiv.innerHTML = customBg;
 
@@ -85,9 +77,6 @@
         let dateNum = convertNumToDate(pullNum,'iso-date');
         let timeNum = convertNumToDate(pullNum,'iso-time')
         timeNum = timeNum.split` `[0];
-
-      //   console.log(dateNum)
-      //   console.log(timeNum)
 
         // plug in variables
         tt.children[0].textContent = dateNum;
