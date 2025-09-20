@@ -114,10 +114,8 @@ app.route('/:type/rec/create').get((req,res)=>{
         throw new Error(err)
     }
 })
-app.route('/:type/event/read/:id').get(async(req,res)=>{
-    let {type,id} = req.params;
-    if(!type||type===undefined)type='common'
-
+app.route('/event/read/:id').get(async(req,res)=>{
+    let {id} = req.params;
 
     try{
         const findById = await findOne(Event,{_id:id});
@@ -125,7 +123,7 @@ app.route('/:type/event/read/:id').get(async(req,res)=>{
         // render ejs
         res.render('partials/read_event.ejs',{
             event_data:findById,
-            navlinks:Object.keys(navigation[type]).filter(str => navigation[type][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && navigation['common'][str]['open']),
             dirspace:true, // determines 
             authenticated:false,
             create:false,
@@ -204,29 +202,31 @@ app.route('/game/create').post((req,res)=>{
     res.redirect('/event/list/all')
 })
 
-// get - all events in json
-app.route('/events/all').get(isAuthenticated, async(req,res)=>{
+// get - all events/games in json
+app.route('/:type/all').get(isAuthenticated, async(req,res)=>{
     
+    let {type} = req.params
     try{
         // get list of events from db
-        const events = await findAll(Event); // array of events
-        res.json({data:events})
+        const gameorevent = await findAll(type==='event'?Event:type==='game'?Game : null); // array of events
+        res.json({data:gameorevent})
     }
     catch(err){
         throw new Error(err)
     }
 })
 // events listed by type (all,upcoming,canceled, completed)
-app.route('/event/list/:parameter').get(isAuthenticated,async(req,res)=>{
+app.route('/:type/list/:parameter').get(isAuthenticated,async(req,res)=>{
     const paramStatus = ['all','upcoming','completed','canceled'];
-    let {parameter} = req.params;
+    let {parameter,type} = req.params;
     try{
         // get list of events from db
-        const events = await findAll(Event); // array of events
+        const eventorgame = await findAll(type==='event'?Event:type==='game'?Game:null); // array of events
         // console.log(events)
         res.render('events.ejs',{
-            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup|Events)/g.test(str) && navigation['common'][str]['open']),
-            event_data:events, // array of events
+            type:type,
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && !(new RegExp(type,'i').test(str)) && navigation['common'][str]['open']),
+            event_data:eventorgame, // array of events
             dirspace:true, // determines 
             authenticated:false,
             parameter:!paramStatus.find(p=>new RegExp(p,'ig').test(parameter)) ? undefined : parameter,
@@ -263,23 +263,6 @@ app.route('/media/:type').get((req,res)=>{
         // return
         res.json(payload);
 })
-
-// onedrive
-// list children of a given root directory
-
-// onedrive.items.listChildren({
-//     accessToken: process.env.REG_APP_CLIENT_SEC,
-//     itemId: "root",
-//     drive: "", // 'me' | 'user' | 'drive' | 'group' | 'site'
-//     driveId: "", // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
-//   })
-//   .then((childrens) => {
-//     console.log(childrens);
-//     // list all children of given root directory
-//     //
-//     // console.log(childrens);
-//     // returns body of https://dev.onedrive.com/items/list.htm#response
-//   });
 
 /*------------------------------------------- */
 

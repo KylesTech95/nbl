@@ -1,6 +1,4 @@
  const tiles = [...document.querySelectorAll('.event-list-item')];
-
-
  /* ----------------- handle tile evenets ----------------- */
  let currentPos = {x:undefined,y:undefined};
  let insideTile = false;
@@ -112,9 +110,10 @@ for(let i = 0; i < arrows.length; i++){
          arrows[i].onclick = handleArrowClick
 }
 
+// scroll through events with arrow click
  async function handleArrowClick(e){
    // list tiles
-   let getevents = await fetch('../../events/all').then(r=>r.json()).then(d=>d['data']);
+   let getevents = await fetch('../../event/'+'all').then(r=>r.json()).then(d=>d['data']);
    // split href
    let splitRef = window.location.href.split`/`
    // get id from href
@@ -158,5 +157,6 @@ for(let i = 0; i < arrows.length; i++){
    window.location.href = window.location.origin + "/event/read/" + getUpdatedId;
    }
 }
+
  /* ----------------- read evenets ----------------- */
 
