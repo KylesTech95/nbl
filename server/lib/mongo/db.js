@@ -21,6 +21,17 @@ function createEvent(payload){
         return;
 }
 
+function createGame(payload){
+        const game = createInstance(Game, payload);
+        saveData(game);
+        return;
+}
+function createPlayer(payload){
+        const player = createInstance(Player, payload);
+        saveData(player);
+        return;
+}
+
 // create mock reservation
 // const cookout = createInstance(Reservation, {
 //     r_id:'fj9jf239f',
@@ -97,5 +108,5 @@ function createEvent(payload){
 // deleteAll(Event);
 
 
-module.exports = { createEvent }
+module.exports = { createEvent, createGame, createPlayer }
 

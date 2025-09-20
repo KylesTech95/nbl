@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Team, Stats , Player, Game, Reservation, Event } = require('./lib/mongo/schema.js')
 const { saveData,createInstance, updateOne, updateMany, findAll,findOne, deleteAll } = require('./lib/mongo/crud.js')
-const { createEvent } = require('./lib/mongo/db.js')
+const { createEvent, createGame, createPlayer } = require('./lib/mongo/db.js')
 const {readdirSync} = require('fs')
 const express = require('express');
 const app = express();
@@ -30,9 +30,10 @@ const auth = require('./lib/routes/auth.js')
 let gameDetails = {
         dealer:null, // the id (p_id) of the dealer
         winning_score:0,
-        losing_acore:0,
+        losing_score:0,
         winners:[], // 5 players = 1 team
         losers:[], // array of IDs (p_id)
+        game_type:null,
     }
 let eventDetails = {
     start_date:null,
@@ -114,19 +115,20 @@ app.route('/:type/rec/create').get((req,res)=>{
         throw new Error(err)
     }
 })
-app.route('/event/read/:id').get(async(req,res)=>{
-    let {id} = req.params;
+app.route('/:type/read/:id').get(async(req,res)=>{
+    let {type,id} = req.params;
 
     try{
-        const findById = await findOne(Event,{_id:id});
+        const findById = await findOne(type==='event'?Event:type==='game'?Game:undefined,{_id:id});
         console.log(findById)
         // render ejs
         res.render('partials/read_event.ejs',{
             event_data:findById,
-            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup)/g.test(str) && navigation['common'][str]['open']),
+            navlinks:Object.keys(navigation['common']).filter(str => !/(Login|Signup|Players)/g.test(str) && navigation['common'][str]['open']),
             dirspace:true, // determines 
             authenticated:false,
             create:false,
+            type:type
         })
     }
     catch(err){
@@ -137,6 +139,7 @@ app.route('/event/read/:id').get(async(req,res)=>{
 app.route('/event/create').post((req,res)=>{
     let {
         event_name,
+        event_location,
         event_description,
         event_start_date,
         event_end_date,
@@ -154,8 +157,10 @@ app.route('/event/create').post((req,res)=>{
     payload.description = event_description;
     payload.createdAt = Date.now();
     payload.updatedAt = null;
+    payload.location = event_location;
     // event details
     eventDetails.start_date = event_start_date;
+    // eventDetails.location = event_location;
     eventDetails.end_date = event_end_date;
     eventDetails.start_time = `${event_start_time0}${event_start_time1}:${event_start_time2}${event_start_time3}`
     eventDetails.end_time = `${event_end_time0}${event_end_time1}:${event_end_time2}${event_end_time3}`
@@ -170,7 +175,8 @@ app.route('/event/create').post((req,res)=>{
 // post - create game
 app.route('/game/create').post((req,res)=>{
     let {
-        event_name,
+        game_type,
+        event_location,
         event_description,
         event_start_date,
         event_end_date,
@@ -183,23 +189,24 @@ app.route('/game/create').post((req,res)=>{
         event_end_time2,
         event_end_time3} = req.body;
     let payload = {};
-    payload.id = '31e33d31';
-    payload.name = event_name;
+    payload.id = '939d39j';
     payload.description = event_description;
     payload.createdAt = Date.now();
     payload.updatedAt = null;
+    payload.location = event_location;
     // event details
-    eventDetails.start_date = event_start_date;
-    eventDetails.end_date = event_end_date;
-    eventDetails.start_time = `${event_start_time0}${event_start_time1}:${event_start_time2}${event_start_time3}`
-    eventDetails.end_time = `${event_end_time0}${event_end_time1}:${event_end_time2}${event_end_time3}`
+    gameDetails.game_type = game_type;
+    gameDetails.start_date = event_start_date;
+    gameDetails.end_date = event_end_date;
+    gameDetails.start_time = `${event_start_time0}${event_start_time1}:${event_start_time2}${event_start_time3}`
+    gameDetails.end_time = `${event_end_time0}${event_end_time1}:${event_end_time2}${event_end_time3}`
 
-    payload.eventDetails = eventDetails
+    payload.gameDetails = gameDetails
     payload = {...payload,...default_options}
 
-    createEvent(payload);
+    createGame(payload);
     
-    res.redirect('/event/list/all')
+    res.redirect('/game/list/all')
 })
 
 // get - all events/games in json

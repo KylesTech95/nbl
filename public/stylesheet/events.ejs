@@ -124,7 +124,46 @@
         transition: .75s;
      }
 
+     .create-readme{
+        color:#fff;
+        border:.5px solid #f00;
+        font-size: 12pt;
+        position: fixed;
+        top:0;
+        width:100%;
+        padding:.5rem 0;
+        /* background:#f00; */
+        text-align: center;
+     }
+     #create-something{
+        z-index:999;
+     }
+     #create-something>h1{
+        height:50px;
+        width:50px;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position:fixed;
+        top:0;
+        right:0;
+        padding:.75rem;
+        background:red;
+        border-radius: 0 0 0 12px;
+     }
+     #create-something>h1:hover{
+        cursor:pointer;
+        transform: scale(.97);
+     }
 
-
+@media screen and (max-width:670px) {
+    #create-something>h1{
+        top:144px;
+        left:0;
+        right:unset !important;
+        border-radius: 0 12px 12px 0;;
+    }
+}
 </style>
 

@@ -1,4 +1,5 @@
  const tiles = [...document.querySelectorAll('.event-list-item')];
+ const createSomething = document.getElementById('create-something')
  /* ----------------- handle tile evenets ----------------- */
  let currentPos = {x:undefined,y:undefined};
  let insideTile = false;
@@ -27,9 +28,9 @@
     }
  }
  const handleClick = e => {
-    let targetLink = [...e.currentTarget.children][e.currentTarget.children.length-2].textContent
-    console.log(targetLink)
-       window.location.href = window.location.origin + '/event/read/' + targetLink
+   let targetLink = [...e.currentTarget.children][e.currentTarget.children.length-2].textContent
+   let gameorevent = gameOrEvent();
+   window.location.href = window.location.origin + "/" + gameorevent + "/read/" + targetLink;
  }
  /* ----------------- handle tile evenets ----------------- */
 
@@ -113,7 +114,8 @@ for(let i = 0; i < arrows.length; i++){
 // scroll through events with arrow click
  async function handleArrowClick(e){
    // list tiles
-   let getevents = await fetch('../../event/'+'all').then(r=>r.json()).then(d=>d['data']);
+   let gameorevent = gameOrEvent()
+   let getevents = await fetch('../../' + gameorevent + '/' + 'all').then(r=>r.json()).then(d=>d['data']);
    // split href
    let splitRef = window.location.href.split`/`
    // get id from href
@@ -140,23 +142,65 @@ for(let i = 0; i < arrows.length; i++){
    if(idx >= 0 && idx < getevents.length){
       switch(true){
       case isleft:
-         idx -= 1;
+         idx = (idx>0?idx - 1 : getevents.length-1) % getevents.length;
       break;
 
       case isright:
-         idx += 1;
+         idx = (idx + 1) % getevents.length;
       break;
 
       default:
          console.log(undefined);
       break;
    }
-   // console.log("Updated Index:")
-   // console.log(idx)
+   let gameorevent = gameOrEvent();
    let getUpdatedId = getevents[idx]._id;
-   window.location.href = window.location.origin + "/event/read/" + getUpdatedId;
+   window.location.href = window.location.origin + "/" + gameorevent + "/read/" + getUpdatedId;
    }
 }
 
  /* ----------------- read evenets ----------------- */
 
+
+ /* ----------------- create game/event ----------------- */
+createSomething ?  createSomething.onclick = creationFunc : null
+createSomething ?  createSomething.onmouseover = createMouseOver : null
+createSomething ?  createSomething.onmouseleave = createMouseLeave : null
+
+ function creationFunc(){
+   let gameorevent = gameOrEvent();
+   let endpoint = `/${gameorevent}/rec/create`
+   // create game/event
+   window.location.href = window.location.origin + endpoint
+ }
+ function gameOrEvent(){
+   let gameorevent = window.location.pathname.match(/(game|event)/gi)
+   gameorevent = gameorevent[0]||undefined
+   return gameorevent;
+ }
+
+ function createMouseOver(e){
+   let gameorevent = gameOrEvent();
+   const target = e.currentTarget;
+   const p = document.createElement('p')
+   p.classList.add('create-readme')
+   p.textContent = `create ${gameorevent}`
+   
+   console.log(p)
+   document.body.appendChild(p)
+
+ }
+ function createMouseLeave(e){
+   let readmes = [...document.querySelectorAll('.create-readme')]
+   readmes ? readmes.map(x=>x.remove()) : null; // remove all if any
+ }
+ /* ----------------- create game/event ----------------- */
+
+
+ /* ----------------- Window onload ----------------- */
+ window.onload = e => {
+   let readingEvent = window.location.pathname.split`/`.includes('read')&&[...window.location.pathname.split`/`].find(x=>x==='read');
+   let footerlink = document.querySelector('#footer > a');
+   readingEvent ? footerlink.setAttribute('href','/') : null;
+ }
+ /* ----------------- Window onload ----------------- */

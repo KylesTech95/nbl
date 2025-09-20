@@ -4,6 +4,7 @@
     <!-- form -->
     <form action="/game/create" method="post">
             <!-- game type -->
+             <label for="game_type">Game Type</label>
              <select name="game_type" id="game-type-selection">
                 <option value="REG">Regular</option>
                 <option value="TOURNY">Tournament</option>
@@ -16,6 +17,11 @@
                 <input type="text" name="event_description" id="event-description" required>
             </div>
             
+            <!-- event location -->
+             <div id="location-container">
+                <label for="event_location">Game Location</label>
+                <input type="text" name="event_location" id="event-location" required>
+             </div>
             <!-- event date -->
             <div id="date-container">
                 <!-- event start date -->

@@ -40,6 +40,7 @@ const teamSchema = new Schema({
 // Create on 2025-05-13T01:41:05.070Z
 const gameSchema = new Schema({
 g_id:String,
+description:String,
 players: [String],
 admins: [String],
 location:String,
@@ -56,6 +57,7 @@ const eventSchema = new Schema({
     e_id:String,
     name:String,
     description:String,
+    location:String,
     createdAt:String,
     updatedAt:String,
     canceled:Boolean,

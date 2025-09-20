@@ -26,14 +26,25 @@
     <!-- main -->
     <div id="event-container-read" class="">
         <div id="event-nomenclature-container">
-            <div>
+                <div>
                 <p class="event-label-elem event-label-name">Event Name</p>
-                <h1 id="event-name" class=""><%= event_data['name']%></h1>
+                <h1 id="event-name" class=""><%= event_data[type==='event'?'name':type==='game'?'description':undefined]%></h1>
             </div>
+
             <div>
                 <p class="event-label-elem">Event Description</p>
                 <p class="border-bottom-blk padding-top-5rem width-100" id="event-description"><%= event_data['description']%></p>
             </div>
+            <div>
+                <p class="event-label-elem">Event Location</p>
+                <p class="border-bottom-blk padding-top-5rem width-100" id="event-location"><%= event_data['location']%></p>
+            </div>
+            <% if(type==='game') { %>
+                <div>
+                    <p class="event-label-elem">Event Type</p>
+                    <p class="border-bottom-blk padding-top-5rem width-100" id="event-location"><%= event_data['gameDetails']['game_type']%></p>
+                </div>
+                <% } %>
             <div>
                 <p class="event-label-elem">Event Created At</p>
                 <p class="border-bottom-blk padding-top-5rem width-100" id="event-createdAt"><%= event_data['createdAt'] %></p>
@@ -44,22 +55,22 @@
             </div>
             <div>
                 <p class="event-label-elem">Start Date</p>
-                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data['eventDetails']['start_date']||'Event has not been updated'%></p>
+                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data[type==='event'?'eventDetails' : type==='game' ? 'gameDetails' : undefined]['start_date']||'Event has not been updated'%></p>
             </div>
 
             <div>
                 <p class="event-label-elem">Start Time</p>
-                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data['eventDetails']['start_time']||'Event has not been updated'%></p>
+                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data[type==='event'?'eventDetails' : type==='game' ? 'gameDetails' : undefined]['start_time']||'Event has not been updated'%></p>
             </div>
             
             <div>
                 <p class="event-label-elem">End Date</p>
-                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data['eventDetails']['end_date']||'Event has not been updated'%></p>
+                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data[type==='event'?'eventDetails' : type==='game' ? 'gameDetails' : undefined]['end_date']||'Event has not been updated'%></p>
             </div>
             
             <div>
                 <p class="event-label-elem">End Time</p>
-                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data['eventDetails']['end_time']||'Event has not been updated'%></p>
+                <p class="border-bottom-blk padding-top-5rem width-100" id="event-updatedAt"><%= event_data[type==='event'?'eventDetails' : type==='game' ? 'gameDetails' : undefined]['end_time']||'Event has not been updated'%></p>
             </div>
             
             <div>
